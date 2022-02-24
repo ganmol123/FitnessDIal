@@ -1,5 +1,7 @@
 import  { Routes, Route, Router, Navigate } from 'react-router-dom';
 import { Login } from "../../components/login/login";
+import logo from "../../assets/yoga-image.jpeg";
+import { Signup } from '../../components/signup/signup';
 import './landing-page.scss';
 
 export function LandingPage() {
@@ -26,7 +28,9 @@ export function LandingPage() {
             </div>  
             <div className="landing-page-body">
                 <div className="landing-page-left-pane">
-                    <Login></Login>
+                    { <Login></Login>}
+                     
+                     {/* <img src={logo} alt="logo" width="200" height="200"/> */}
                 </div>
                 <div className="landing-page-right-pane">
                     <div className="heading">
@@ -36,27 +40,11 @@ export function LandingPage() {
                        <div className="signup-description">
                            Reach your fitness goals or maintain your healthy lifestyle with professional training and support from  a positive and active online community - for free.
                        </div>
-                       
                     </div>
-                {/* <Routes>
-                    <Route path='/' element={<Navigate to="/login"></Navigate>}>
-                    </Route>
-                    <Route path='/login' element={<Login></Login>}></Route>
-                    <Route path='/register' element={<Login></Login>}></Route>
-                </Routes> */}
+                    <Signup></Signup>
+               
                 </div>
             </div>
-            {/* <div className="landing-page-left-pane">
-
-            </div>
-            <div className="landing-page-right-pane">
-                <Routes>
-                    <Route path='/' element={<Navigate to="/login"></Navigate>}>
-                    </Route>
-                    <Route path='/login' element={<Login></Login>}></Route>
-                    <Route path='/register' element={<Login></Login>}></Route>
-                </Routes>
-            </div> */}
             </div>
         </div>
     )
