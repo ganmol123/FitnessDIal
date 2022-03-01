@@ -1,19 +1,28 @@
+@import '../../scss/variables.scss';
 .login-container {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  border-radius: 10px;
   .login-form {
-      width: 80%;
+      margin: 3em;
   }
-  .login-inputs {
+  .login-inputs-container {
+    box-shadow: 0 0 10px black;
     p {
       font-size: 14px;
+      cursor: pointer;
+      color: $primary;
+      padding: 1em;
     }
     display: flex;
     width: 50%;
     margin: auto;
     flex-direction: column;
+    padding: 2em;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: white;
+    .login-inputs {
+      display: flex;
+      flex-direction: column;
+    }
     .input-text {
       margin: 1em;
     }
@@ -26,6 +35,10 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        button {
+          background-color:$primary !important;
+          color: white !important;
+        }
     }
 
     /* Shared */

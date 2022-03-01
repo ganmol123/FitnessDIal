@@ -1,0 +1,15 @@
+.customer-landing-header {
+    display: flex;
+    .fitness-dial-logo {
+        width: 40px;
+    }
+    .navbar {
+        display: flex;
+        
+        li.navbar-item {
+            list-style: none;
+            padding: 10px;
+            margin: 10px;
+        }
+    }
+}

@@ -1,23 +1,26 @@
 .landing-page-container {
+    background-color: #6fa2ef;
     .landing-page-header {
         display: flex;
-        .fitness-dial-logo {
-            width: 40px;
-        }
-        .navbar {
-            display: flex;
+        font-size: 65px;
+        color: white;
+        padding: 20px;
+        // .fitness-dial-logo {
+        //     width: 40px;
+        // }
+        // .navbar {
+        //     display: flex;
             
-            li.navbar-item {
-                list-style: none;
-                padding: 10px;
-                margin: 10px;
-            }
-        }
+        //     li.navbar-item {
+        //         list-style: none;
+        //         padding: 10px;
+        //         margin: 10px;
+        //     }
+        // }
     }
     .landing-page-body {
         display: flex;
         height: 100vh;
-        background-color: #e1f8e1;
         .landing-page-left-pane {
             width: 50%;
             border-right: 1px solid lightgrey;
@@ -29,14 +32,7 @@
             width: 50%;
             .heading {
                 padding: 15px;
-                .join-free-text {
-                    font-weight: 700;
-                    color: darkslateblue;
-                    font-size: large;
-                }
-                .signup-description {
-                    padding: 15px;
-                }
+                font-size: 21px;
             }
         }
     }
