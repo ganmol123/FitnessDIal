@@ -1,0 +1,12 @@
+.signup-container {
+    .signup-inputs {
+        display: flex;
+        width: 40%;
+        margin: auto;
+        justify-content: center;
+        flex-direction: column;
+        .text-input {
+            margin: 1em;
+        }
+    }
+}
