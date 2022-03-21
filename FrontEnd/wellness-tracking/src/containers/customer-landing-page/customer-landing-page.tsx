@@ -5,11 +5,8 @@ export function CustomerLandingPage() {
     return (
         <div className="customer-landing-page">
             <div className="customer-landing-header">
-                <div className="fitness-dial-logo">
 
-                </div>
-                
-                    <Navbar></Navbar>
+                <Navbar></Navbar>
             </div>
         </div>
     )

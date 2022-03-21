@@ -1,3 +1,4 @@
+@import '../../scss/variables.scss';
 .signup-container {
     .signup-form {
         margin: 3em;
@@ -15,6 +16,10 @@
     background-color: white;
     .text-input {
       margin: 1em;
+    }
+    p {
+      color: $primary;
+      cursor: pointer;
     }
   }
 }

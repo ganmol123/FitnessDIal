@@ -1,12 +1,39 @@
-.navbar-items {
+@import '../../scss/variables.scss';
+nav {
     display: flex;
-    flex-direction:row;
-    li.navbar-item {
-        list-style: none;
-        padding: 10px;
-        margin: 10px;
+    width: 100%;
+    
+    
+
+    .left-pane {
+        display: flex;
+        .fitness-dial-logo {
+            display: flex;
+            align-items: center;
+            padding-left: 1em;
+            width: 50px;
+            cursor: pointer;
+        }
+        width: 90%;
+        .navbar-items {
+            display: flex;
+            flex-direction:row;
+            li.navbar-item {
+                cursor: pointer;
+                list-style: none;
+                padding: 10px;
+                margin: 10px;
+                font-size: 18px;
+                font-weight: 600;
+                
+            }
+            .navbar-item.--selected {
+                color: $secondary;
+            }
+        }
+    }
+    .right-pane {
+        margin: auto;
     }
 }
-.right-pane {
-    margin: auto;
-}
+

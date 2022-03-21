@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import { Button, Radio, Alert, Backdrop, CircularProgress } from "@mui/material";
+import { Button, Radio, Alert, Backdrop, CircularProgress, AlertColor } from "@mui/material";
 import GoogleLogin from 'react-google-login';
 import { forgot, login, setUserDetails, signUp } from '../../services/user.service';
 import './login.scss';
@@ -14,11 +14,12 @@ export function Login() {
     const [forgotPasswordForm, setForgotPasswordForm] = useState(false);
     const [searchParams] = useSearchParams()
     const [loading, setLoading] = useState(false)
-    const [alertMsg, setAlertMsg] = useState('')
+    const [alert, setAlert] = useState<any>({type:'success',msg:''})
 
     useEffect(() => {
-        setAlertMsg(searchParams.get('activated') ? 'Email confirmed. Login.' : '')
-    }, [searchParams])
+        const msg = searchParams.get('activated') ? 'Email confirmed. Login.' : ''
+        setAlert({...alert,msg})
+    }, [])
 
 
     function handleUserName(e: any) {
@@ -31,13 +32,17 @@ export function Login() {
 
     const loginUser = async (e: any) => {
         e.preventDefault();
+        setLoading(true)
         try {
             const user = await login(username, password);
+            setLoading(false)
             setUserDetails(user);
             navigate('/home');
         }
-        catch {
-            console.log("Something went wrong");
+        catch(e:any) {
+            setLoading(false)
+            const alert = {type: 'error',msg:e.message};
+            setAlert(alert)
         }
     }
 
@@ -79,10 +84,12 @@ export function Login() {
         e.preventDefault();
         try {
             await forgot(username);
-            setAlertMsg('An email has been sent to you to reset your password');
+            const alert = {type:'success',msg:'An email has been sent to you to reset your password'}
+            setAlert(alert);
         }
-        catch {
-            console.log('Something went wrong')
+        catch(e:any) {
+            const alert = {type: 'error',msg:e.message};
+            setAlert(alert)
         }
     }
 
@@ -91,7 +98,7 @@ export function Login() {
             <div className="login-form">
                 <form onSubmit={loginUser}>
                     <div className="login-inputs-container">
-                        {alertMsg && <Alert severity="success">{alertMsg}</Alert>}
+                        {alert.msg && <Alert severity={alert.type as AlertColor}>{alert.msg}</Alert>}
                         {!forgotPasswordForm && <div className="login-inputs">
                             <div style={{ fontSize: "21px", padding: "1em" }}>Login here</div>
                             {/* <div style={{ fontSize: "16px", padding: "1em" }}>Choose customer or professional and enter your Username and password</div> */}

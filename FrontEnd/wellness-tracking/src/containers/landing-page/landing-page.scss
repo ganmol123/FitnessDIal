@@ -1,5 +1,6 @@
+@import '../../scss/variables.scss';
 .landing-page-container {
-    background-color: #6fa2ef;
+    background-color: $secondary;
     .landing-page-header {
         display: flex;
         font-size: 65px;
