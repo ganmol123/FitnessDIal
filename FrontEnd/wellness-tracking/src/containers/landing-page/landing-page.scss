@@ -3,9 +3,16 @@
     background-color: $secondary;
     .landing-page-header {
         display: flex;
-        font-size: 65px;
-        color: white;
-        padding: 20px;
+        font-size: 30px;
+        
+        // padding: 10px;
+        // .landing-page-font{
+        //     padding-top: 30px;
+        //     padding-left: 1px;
+        //     color: darkslategray;
+        //     font-weight: bold;
+        //     font-family: 'lucida grande';
+        // }
         // .fitness-dial-logo {
         //     width: 40px;
         // }
@@ -19,12 +26,15 @@
         //     }
         // }
     }
+   
     .landing-page-body {
         display: flex;
         height: 100vh;
         .landing-page-left-pane {
             width: 50%;
             border-right: 1px solid lightgrey;
+            padding-top:  70px;
+          
         }
         .landing-page-right-pane {
             p {
@@ -35,6 +45,7 @@
                 padding: 15px;
                 font-size: 21px;
             }
+
         }
     }
 }
