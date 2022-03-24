@@ -43,9 +43,9 @@ export function Signup() {
                 {!emailVerificationMsg && <form onSubmit={registerUser}>
                     <div className="signup-inputs">
                         <div className="heading">Sign up here</div>
-                        <TextField required size="small" id="first_name_signup" onChange={(e) => setFirstName(e.target.value)} className="text-input" variant="outlined" label="First Name"></TextField>
-                        <TextField size="small" id="last_name_signup" onChange={e => setLastName(e.target.value)} className="text-input" variant="outlined" label="Last Name"></TextField>
-                        <TextField required size="small" type="email" id="email_signup" onChange={e => setEmail(e.target.value)} className="text-input" variant="outlined" label="Email"></TextField>
+                        <TextField required size="small" id="first_name_signup" onChange={(e:any) => setFirstName(e.target.value)} className="text-input" variant="outlined" label="First Name"></TextField>
+                        <TextField size="small" id="last_name_signup" onChange={(e:any) => setLastName(e.target.value)} className="text-input" variant="outlined" label="Last Name"></TextField>
+                        <TextField required size="small" type="email" id="email_signup" onChange={(e:any) => setEmail(e.target.value)} className="text-input" variant="outlined" label="Email"></TextField>
                         <PhoneInput containerStyle={{ margin: "1em" }} onChange={e => setPhone(e)}></PhoneInput>
                         {/* <TextField size="small" id="phone_number_signup" onChange={e=>setPhone(e.target.value)} type="number" className="text-input" variant="outlined" label="Phone"></TextField> */}
                         <p>Please choose the option that describes you the best:</p>

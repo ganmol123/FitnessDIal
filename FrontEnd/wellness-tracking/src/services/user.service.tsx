@@ -1,13 +1,13 @@
-import { ReplaySubject } from 'rxjs';
 import axios from '../axios';
 
-const _userDetails$ = new ReplaySubject<any>(1);
-
-export const userDetails$ = _userDetails$.asObservable();
 
 
 export function setUserDetails(userDetails: any) {
-    _userDetails$.next(userDetails);
+    localStorage.setItem('userDetails',JSON.stringify(userDetails));
+}
+
+export function getUserDetails():any {
+    return JSON.parse(localStorage.getItem('userDetails')||'');
 }
 
 export const signUp = (user: any) => {

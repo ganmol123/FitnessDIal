@@ -37,7 +37,7 @@ export function Login() {
             const user = await login(username, password);
             setLoading(false)
             setUserDetails(user);
-            navigate('/home');
+            navigate('/dashboard');
         }
         catch(e:any) {
             setLoading(false)
@@ -62,13 +62,13 @@ export function Login() {
                 await signUp(user);
                 setLoading(false)
                 setUserDetails(user);
-                navigate('/home');
+                navigate('/dashboard');
             }
             catch (e: any) {
                 setLoading(false)
                 if (e.message === 'Bad request params - email already exists. Try logging in!') {
                     setUserDetails(user);
-                    navigate('/home')
+                    navigate('/dashboard')
                 }
             }
 
@@ -150,7 +150,7 @@ export function Login() {
 
             </div>
             <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                sx={{ color: '#fff', zIndex: (theme:any) => theme.zIndex.drawer + 1 }}
                 open={loading}
             >
                 <CircularProgress color="inherit" />
