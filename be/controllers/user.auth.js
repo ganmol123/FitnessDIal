@@ -157,8 +157,9 @@ async function login(req, res) {
     return;
   }
   try {
-    const validated = await authenticate(username, password);
-    req.session.user = validated;
+    // const validated =
+    await authenticate(username, password);
+    // req.session.user = validated;
     res.status(200).send({
       message: "Successfully logged in!",
     });
