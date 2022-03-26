@@ -1,6 +1,5 @@
 export const CustomerTabs = [
     { name: 'Dashboard', route: '/dashboard' },
-    { name: 'Search', route: '/search' },
     { name: 'Messages', route: '/messages' },
     { name: 'Notifications', route: '/notifications' },
     {

@@ -3,7 +3,7 @@ import { CustomerLandingPage } from "../customer-landing-page/customer-landing-p
 import { ProfessionalLandingPage } from "../professional-landing-page/professional-landing-page";
 export function Home() {
 
-    const userDetails = getUserDetails();
+    const userDetails = {user_type:'Customer'};
 
     
     return (

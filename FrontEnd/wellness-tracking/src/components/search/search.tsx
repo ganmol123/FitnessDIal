@@ -60,7 +60,7 @@ export function Search() {
                                 label="Specialty"
                                 onChange={(e) => setSpecialty(e.target.value)}
                             >
-                                {specialties.map(type => <MenuItem value={type}>{type}</MenuItem>)}
+                                {specialties.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
                             </Select>
                         </div>
                         <div className={classes['filter']}>

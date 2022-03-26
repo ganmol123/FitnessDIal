@@ -14,8 +14,9 @@ import { Search } from './components/search/search';
 
 function App() {
   
-  const userDetails = getUserDetails();
-  const [tabs, setTabs] = useState<any>(userDetails.user_type==='Professional' ? ProfessionalTabs : CustomerTabs);
+  // const userDetails = getUserDetails();
+  const [tabs, setTabs] = useState<any>(CustomerTabs);
+
   return (
     // <ThemeProvider theme={theme}>
     <div className="App" style={{ display: 'flex' }}>
@@ -26,7 +27,7 @@ function App() {
           <Route path='*' element={<LandingPage></LandingPage>}></Route>
           <Route path='dashboard' element={<Home></Home>}></Route>
           <Route path='profile' element={<Profile></Profile>}></Route>
-          <Route path='search' element={<Search/>}></Route>
+          {/* <Route path='search' element={<Search/>}></Route> */}
           <Route element={<div>Not found</div>}></Route>
         </Routes>
       </div>

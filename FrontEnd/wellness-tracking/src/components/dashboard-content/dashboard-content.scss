@@ -1,0 +1,13 @@
+.dashboard-content-container {
+    .dashboard-header {
+        display:flex;
+        font-weight:bold;
+        margin-bottom:10px;
+        font-size: 21px;
+    }
+  .video-tiles-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+}

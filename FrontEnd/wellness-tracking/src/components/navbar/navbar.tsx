@@ -21,9 +21,9 @@ function Navbar(props:any) {
                     </SidebarHeader>
                     <SidebarContent>
                         {tabs.map((tab: any, i: number) => {
-                            return !tab.children ? (<MenuItem onClick={() => {setTabIndex({tab:i,child:0}); navigate(tab.route); setSubMenuOpen(false)}} className={`navbar-item` + (i === tabIndex.tab ? ` --selected` : '')}>{tab.name}</MenuItem>) :
+                            return !tab.children ? (<MenuItem key={tab.name} onClick={() => {setTabIndex({tab:i,child:0}); navigate(tab.route); setSubMenuOpen(false)}} className={`navbar-item` + (i === tabIndex.tab ? ` --selected` : '')}>{tab.name}</MenuItem>) :
                             (<SubMenu open={subMenuOpen} title={tab.name} onClick={()=>setSubMenuOpen(!subMenuOpen)}>
-                            {tab.children.map((child:any,j:number)=><MenuItem onClick={() =>{ setTabIndex({tab:i,child:j}); navigate(child.route) }} className={`navbar-item` + (i === tabIndex.tab && j === tabIndex.child ? ` --selected` : '')}>{child.name}</MenuItem>)}
+                            {tab.children.map((child:any,j:number)=><MenuItem  key = {child.name} onClick={() =>{ setTabIndex({tab:i,child:j}); navigate(child.route) }} className={`navbar-item` + (i === tabIndex.tab && j === tabIndex.child ? ` --selected` : '')}>{child.name}</MenuItem>)}
                         </SubMenu>)
                         })}
                         

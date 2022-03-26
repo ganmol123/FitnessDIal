@@ -27,7 +27,7 @@ export function LandingPage() {
                             </Route>
                             <Route path='/login' element={<Login></Login>}></Route>
                             <Route path='/register' element={<Signup></Signup>}></Route>
-                            <Route path='/createPassword/' element={<CreatePassword></CreatePassword>}></Route>
+                            <Route path='/createPass/' element={<CreatePassword></CreatePassword>}></Route>
                         </Routes>
                     </div>
                 </div>

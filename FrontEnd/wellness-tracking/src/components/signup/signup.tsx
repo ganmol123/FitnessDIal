@@ -8,7 +8,7 @@ import './signup.scss';
 import { signUp } from "../../services/user.service";
 
 export function Signup() {
-    const [user_type, setUserType] = useState('customer');
+    const [user_type, setUserType] = useState('Customer');
     const [first_name, setFirstName] = useState('');
     const [last_name, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -52,17 +52,17 @@ export function Signup() {
                         <div className="roles">
                             <label htmlFor="customer">Customer</label>
                             <Radio
-                                checked={user_type === 'customer'}
-                                onChange={() => setUserType('customer')}
-                                value="customer"
+                                checked={user_type === 'Customer'}
+                                onChange={() => setUserType('Customer')}
+                                value="Customer"
                                 name="radio-buttons"
                                 inputProps={{ 'aria-label': 'A' }}
                             />
                             <label htmlFor="professional">Professional</label>
                             <Radio
-                                checked={user_type === 'professional'}
-                                onChange={() => setUserType('professional')}
-                                value="professional"
+                                checked={user_type === 'Professional'}
+                                onChange={() => setUserType('Professional')}
+                                value="Professional"
                                 name="radio-buttons"
                                 inputProps={{ 'aria-label': 'A' }}
                             />

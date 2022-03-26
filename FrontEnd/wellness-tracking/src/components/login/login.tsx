@@ -132,7 +132,7 @@ export function Login() {
                                     buttonText="Continue with Google"
                                     onSuccess={responseGoogle}
                                     onFailure={responseGoogle}
-                                    cookiePolicy={'single_host_origin'}
+                                    cookiePolicy='single_host_origin'
                                 />}
                                 <p style={{ textDecoration: "underline" }} onClick={() => navigate('/register')}>Don't have an account? Click here to register.</p>
                             </div>
