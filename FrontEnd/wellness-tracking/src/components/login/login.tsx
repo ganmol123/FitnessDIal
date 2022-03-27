@@ -3,22 +3,23 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { Button, Radio, Alert, Backdrop, CircularProgress, AlertColor } from "@mui/material";
 import GoogleLogin from 'react-google-login';
+import store from '../../store';
 import { forgot, login, setUserDetails, signUp } from '../../services/user.service';
 import './login.scss';
 
 export function Login() {
-    const [user_type, setUserType] = useState('customer');
+    const [user_type, setUserType] = useState('Customer');
     const [password, setPassword] = useState('');
     const [username, setUserName] = useState('');
     const navigate = useNavigate();
     const [forgotPasswordForm, setForgotPasswordForm] = useState(false);
     const [searchParams] = useSearchParams()
     const [loading, setLoading] = useState(false)
-    const [alert, setAlert] = useState<any>({type:'success',msg:''})
+    const [alert, setAlert] = useState<any>({ type: 'success', msg: '' })
 
     useEffect(() => {
         const msg = searchParams.get('activated') ? 'Email confirmed. Login.' : ''
-        setAlert({...alert,msg})
+        setAlert({ ...alert, msg })
     }, [])
 
 
@@ -30,18 +31,30 @@ export function Login() {
         setPassword(e.target.value);
     }
 
+    const navigateToHome = (user: any) => {
+        setLoading(false)
+        store.dispatch({type:'SET_USER',userDetails:user})
+        setUserDetails(user);
+        navigate('/dashboard');
+    }
+
     const loginUser = async (e: any) => {
         e.preventDefault();
         setLoading(true)
         try {
             const user = await login(username, password);
-            setLoading(false)
-            setUserDetails(user);
-            navigate('/dashboard');
+            const temp = {
+                first_name: 'Sai Kiran',
+                last_name: 'Jella',
+                email: 'jellasaikiran1@gmail.com',
+                phone: '8123698251',
+                user_type:user_type
+            }
+            navigateToHome(temp);
         }
-        catch(e:any) {
+        catch (e: any) {
             setLoading(false)
-            const alert = {type: 'error',msg:e.message};
+            const alert = { type: 'error', msg: e.message };
             setAlert(alert)
         }
     }
@@ -60,15 +73,13 @@ export function Login() {
             try {
                 setLoading(true);
                 await signUp(user);
-                setLoading(false)
-                setUserDetails(user);
-                navigate('/dashboard');
+                navigateToHome(user);
             }
             catch (e: any) {
                 setLoading(false)
-                if (e.message === 'Bad request params - email already exists. Try logging in!') {
-                    setUserDetails(user);
-                    navigate('/dashboard')
+                const msg = e.response?.data?.message;
+                if (msg === 'Bad request params - email already exists. Try logging in!') {
+                    navigateToHome(user);
                 }
             }
 
@@ -84,11 +95,11 @@ export function Login() {
         e.preventDefault();
         try {
             await forgot(username);
-            const alert = {type:'success',msg:'An email has been sent to you to reset your password'}
+            const alert = { type: 'success', msg: 'An email has been sent to you to reset your password' }
             setAlert(alert);
         }
-        catch(e:any) {
-            const alert = {type: 'error',msg:e.message};
+        catch (e: any) {
+            const alert = { type: 'error', msg: e.response.data.message };
             setAlert(alert)
         }
     }
@@ -105,17 +116,17 @@ export function Login() {
                             <div className="roles">
                                 <label htmlFor="customer">Customer</label>
                                 <Radio
-                                    checked={user_type === 'customer'}
-                                    onChange={() => setUserType('customer')}
-                                    value="customer"
+                                    checked={user_type === 'Customer'}
+                                    onChange={() => setUserType('Customer')}
+                                    value="Customer"
                                     name="radio-buttons"
                                     inputProps={{ 'aria-label': 'A' }}
                                 />
                                 <label htmlFor="professional">Professional</label>
                                 <Radio
-                                    checked={user_type === 'professional'}
-                                    onChange={() => setUserType('professional')}
-                                    value="professional"
+                                    checked={user_type === 'Professional'}
+                                    onChange={() => setUserType('Professional')}
+                                    value="Professional"
                                     name="radio-buttons"
                                     inputProps={{ 'aria-label': 'A' }}
                                 />
@@ -150,7 +161,7 @@ export function Login() {
 
             </div>
             <Backdrop
-                sx={{ color: '#fff', zIndex: (theme:any) => theme.zIndex.drawer + 1 }}
+                sx={{ color: '#fff', zIndex: (theme: any) => theme.zIndex.drawer + 1 }}
                 open={loading}
             >
                 <CircularProgress color="inherit" />

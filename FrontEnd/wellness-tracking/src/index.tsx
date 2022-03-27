@@ -6,19 +6,20 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { createStore } from 'redux';
+import { getUserDetails } from './services/user.service';
+import store from './store';
 
-const store = createStore(() => ({
-  userDetails: {}
-}));
+
+
+// store.dispatch({ type: 'SET_USER', userDetails: getUserDetails() })
 
 ReactDOM.render(
-  
-    <BrowserRouter>
-      <Provider store={store} >
-        <App />
-      </Provider>
-    </BrowserRouter>,
+
+  <BrowserRouter>
+    <Provider store={store} >
+      <App />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

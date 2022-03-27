@@ -7,13 +7,13 @@ export const CustomerTabs = [
         children: [
             { name: 'Profile', route: '/profile' },
             { name: 'My Plan', route: '/plan' },
+            { name: 'Logout', route:'/logout' },
             { name: 'Settings', route: '/settings' }
         ]
     }];
 
 export const ProfessionalTabs = [
     { name: 'Dashboard', route: '/dashboard' },
-    { name: 'Search', route: '/search' },
     { name: 'Messages', route: '/messages' },
     { name: 'Notifications', route: '/notifications' },
     {

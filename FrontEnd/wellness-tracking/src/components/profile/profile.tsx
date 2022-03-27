@@ -5,15 +5,6 @@ import './profile.scss';
 
 export function Profile() {
 
-    setUserDetails({
-        first_name: 'Sai Kiran',
-        last_name: 'Jella',
-        email: 'jsaikiran19@gmail.com',
-        phone: '8123698251'
-    })
-
-
-
     const userDetails = getUserDetails();
     const [first_name, setFirstName] = useState(userDetails.first_name);
     const [last_name, setLastName] = useState(userDetails.last_name);

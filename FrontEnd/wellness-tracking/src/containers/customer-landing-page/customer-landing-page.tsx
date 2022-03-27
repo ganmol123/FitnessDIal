@@ -1,13 +1,14 @@
 import './customer-landing-page.scss';
 
 import 'react-pro-sidebar/dist/css/styles.css';
-import { Tab, Tabs } from '@mui/material';
+import { Button, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/styles';
 import { Box } from '@mui/system';
+import DownloadIcon from '@mui/icons-material/Download';
 
 import { Search } from '../../components/search/search';
 import { MyCalendar } from '../../components/calendar/calendar';
@@ -45,12 +46,13 @@ export function CustomerLandingPage(props: any) {
         setValue(newValue);
     };
     const [value, setValue] = useState(0);
-    const tabs = [{ name: 'My Content', icon: <FormatListBulletedIcon />, component:<DashboardContent/> },
+    const tabs = [{ name: 'My Content', icon: <FormatListBulletedIcon />, component: <DashboardContent /> },
     { name: 'Search', icon: <SearchIcon />, component: <Search /> },
     { name: 'My Calendar', icon: <CalendarMonthIcon />, component: <MyCalendar /> }]
     return (
         <div className="customer-landing-page">
             <div className="customer-landing-header">
+                <Button size="small" startIcon={<DownloadIcon/>} variant="text">My meal plans</Button>
                 <Box sx={{ borderBottom: 1, borderColor: 'lightgrey' }}>
                     <Tabs style={{ minHeight: '35px' }} onChange={handleChange} value={value}>
                         {tabs.map(tab => <StyledTab key={tab.name} style={{ textTransform: 'capitalize' }} label={tab.name} icon={tab.icon} iconPosition="start"></StyledTab>)}

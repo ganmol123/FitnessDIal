@@ -6,10 +6,10 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { City } from 'country-state-city';
 import { useState } from "react";
 import './search.scss';
+import { categories } from "../../models/filters";
 export function Search() {
-    const specialties = ['Weight Training', 'Yoga', 'Zumba', 'Mental health'];
     const [gender, setGender] = useState('Male');
-    const [specialty, setSpecialty] = useState<string>(specialties[0]);
+    const [category, setCategory] = useState<string>(categories[0]);
     const [filtersOpen, setFiltersOpen] = useState(false);
 
     const useCustomStylesByIds = () => {
@@ -56,11 +56,11 @@ export function Search() {
                             <Select size="small"
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={specialty}
-                                label="Specialty"
-                                onChange={(e) => setSpecialty(e.target.value)}
+                                value={category}
+                                label="Category"
+                                onChange={(e) => setCategory(e.target.value)}
                             >
-                                {specialties.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
+                                {categories.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
                             </Select>
                         </div>
                         <div className={classes['filter']}>
