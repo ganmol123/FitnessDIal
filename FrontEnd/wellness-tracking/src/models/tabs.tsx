@@ -20,6 +20,7 @@ export const ProfessionalTabs = [
         name: 'Account',
         children: [
             { name: 'Profile', route: '/profile' },
+            { name: 'Logout', route:'/logout'},
             { name: 'Settings', route: '/settings' }
         ]
     }

@@ -10,6 +10,7 @@ export function Profile() {
         first_name: 'Sai Kiran',
         last_name: 'Jella',
         email: 'jsaikiran19@gmail.com',
+        user_type: 'Customer',
         phone: '8123698251',
         birthdate: '01/01/1999',
         address: '800 N Smith Rd',

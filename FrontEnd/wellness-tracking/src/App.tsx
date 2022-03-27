@@ -31,7 +31,6 @@ function App() {
 
   
   store.subscribe(() => {
-    console.log(store.getState(), 'state');
     const user = store.getState().userDetails;
     if (Object.keys(user).length>0) {
       setTabs(user.user_type === 'Customer' ? CustomerTabs : ProfessionalTabs);

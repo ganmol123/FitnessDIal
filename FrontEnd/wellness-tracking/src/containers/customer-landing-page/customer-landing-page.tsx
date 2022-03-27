@@ -52,7 +52,7 @@ export function CustomerLandingPage(props: any) {
     return (
         <div className="customer-landing-page">
             <div className="customer-landing-header">
-                <Button size="small" startIcon={<DownloadIcon/>} variant="text">My meal plans</Button>
+                <Button style={{marginRight:'2em'}} size="small" startIcon={<DownloadIcon/>} variant="text">My meal plans</Button>
                 <Box sx={{ borderBottom: 1, borderColor: 'lightgrey' }}>
                     <Tabs style={{ minHeight: '35px' }} onChange={handleChange} value={value}>
                         {tabs.map(tab => <StyledTab key={tab.name} style={{ textTransform: 'capitalize' }} label={tab.name} icon={tab.icon} iconPosition="start"></StyledTab>)}
