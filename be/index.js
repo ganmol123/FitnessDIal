@@ -10,7 +10,6 @@ const session = require("./middleware/session");
 
 const app = express();
 
-// app.set("trust proxy", 1);
 app.use(session);
 
 app.use(bodyParser.json());
