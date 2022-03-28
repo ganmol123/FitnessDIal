@@ -8,6 +8,7 @@ import { Profile } from './components/profile/profile';
 import Navbar from './components/navbar/navbar';
 import { CustomerTabs, ProfessionalTabs } from './models/tabs';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { getUserDetails } from './services/user.service';
 import { useNavigate } from 'react-router-dom';
 import { Search } from './components/search/search';
@@ -19,12 +20,17 @@ function App() {
   const navigate = useNavigate();
   const [tabs, setTabs] = useState<any>();
 
+  const location = useLocation();
+
   useEffect(()=>{
     const user = store.getState().userDetails;
     if (Object.keys(user).length>0) {
       setTabs(user.user_type === 'Customer' ? CustomerTabs : ProfessionalTabs);
     }
     else {
+      if(location.pathname.includes('createPass')) {
+        return;
+      }
       navigate('/login');
     }
   },[])
