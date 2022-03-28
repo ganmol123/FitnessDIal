@@ -1,6 +1,8 @@
-import  { Routes, Route, Router, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from "../../components/login/login";
-import logo from "../../assets/yoga-image.jpeg";
+import logo from '../../assets/fitness-dial-logo.png';
+import icon1 from '../../assets/running-man.png';
+import { CreatePassword } from '../../components/create-password/create-password';
 import { Signup } from '../../components/signup/signup';
 import './landing-page.scss';
 
@@ -8,43 +10,28 @@ export function LandingPage() {
     return (
         <div className="wellness-tracking-landing-page">
             <div className="landing-page-container">
-            <div className="landing-page-header">
-                <div className="fitness-dial-logo">
+                <div className="landing-page-header">
+
+                    <div className="logo-container">
+                        <img src={logo} alt="logo" height="150" width="200" />
+                    </div>   
 
                 </div>
-                <div className="navbar-container">
-                    <ul className="navbar">
-                        <li className="navbar-item">Workouts</li>
-                        <li className="navbar-item">Programs</li>
-                        <li className="navbar-item">Healthy Living</li>
-                        <li className="navbar-item">Community</li>
-                        <li className="navbar-item">About</li>  
-                        <li className="navbar-item">Store</li>
-                    </ul>
-                </div>
-                <div className="search-icon">
-                <i className="fa-solid fa-magnifying-glass"></i>
-                </div>
-            </div>  
-            <div className="landing-page-body">
-                <div className="landing-page-left-pane">
-                    { <Login></Login>}
-                     
-                     {/* <img src={logo} alt="logo" width="200" height="200"/> */}
-                </div>
-                <div className="landing-page-right-pane">
-                    <div className="heading">
-                       <div className="join-free-text">
-                       JOIN FREE
-                       </div>
-                       <div className="signup-description">
-                           Reach your fitness goals or maintain your healthy lifestyle with professional training and support from  a positive and active online community - for free.
-                       </div>
+                <div className="landing-page-body">
+                    <div className="landing-page-left-pane">
+                    <img src={icon1} alt="icon1" height="600" width="550" className="icon11" />
                     </div>
-                    <Signup></Signup>
-               
+                    <div className="landing-page-right-pane">
+                        <Routes>
+                            <Route path='/' element={<Navigate to="/login"></Navigate>}>
+                            </Route>
+                            <Route path='/login' element={<Login></Login>}></Route>
+                            <Route path='/register' element={<Signup></Signup>}></Route>
+                            <Route path='/createPass/' element={<CreatePassword></CreatePassword>}></Route>
+                        </Routes>
+                    </div>
                 </div>
-            </div>
+
             </div>
         </div>
     )
