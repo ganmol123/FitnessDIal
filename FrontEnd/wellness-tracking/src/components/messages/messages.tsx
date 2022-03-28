@@ -11,6 +11,8 @@ export function Messages() {
             <div className="search-input-container">
                 <TextField variant="outlined"  size="small" sx={{width:300}} label="Search" placeholder="Find professionals"></TextField>
             </div>
+            <text style={{fontSize:"3rem"}}><br/><br/><br/><br/><br/>No New Message!</text>
         </div>
+        
     )
 }
