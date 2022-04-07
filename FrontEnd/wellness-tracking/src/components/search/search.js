@@ -9,17 +9,18 @@ import './search.scss';
 import { categories } from "../../models/filters";
 export function Search() {
     const [gender, setGender] = useState('Male');
-    const [category, setCategory] = useState<string>(categories[0]);
+    const [category, setCategory] = useState(categories[0]);
     const [filtersOpen, setFiltersOpen] = useState(false);
-
+    const [searchFor, setSearchFor] = useState('Professional')
     const useCustomStylesByIds = () => {
-        const myStyles = makeStyles((theme: any) => {
+        const myStyles = makeStyles((theme ) => {
             const stylesObj = {
+                'search-for-filters':{
+                    display:'flex'
+                },
                 'search-by-filters': {
                     display: 'flex',
-                    width: '800px',
-                    height: '100px',
-                    padding: '30px'
+                    height: '100px'
                 },
                 'filter': {
                     margin: '20px'
@@ -30,14 +31,14 @@ export function Search() {
 
         return myStyles();
     };
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+    const [anchorEl, setAnchorEl] = useState(null)
 
     const classes = useCustomStylesByIds();
     return (
         <div className="search-container">
             <div className="search-header" style={{ marginBottom: '30px', display: 'flex', fontWeight: 'bold' }}>Explore Fitness Professionals.</div>
             <div className="search-filters" style={{ display: 'flex', marginBottom: '30px' }}>
-                <Button id='filters-button' variant="text" startIcon={<FilterAltIcon />} onClick={(e: any) => { setAnchorEl(e.currentTarget); setFiltersOpen(!filtersOpen) }}>
+                <Button id='filters-button' variant="text" startIcon={<FilterAltIcon />} onClick={(e ) => { setAnchorEl(e.currentTarget); setFiltersOpen(!filtersOpen) }}>
                     Filters
                 </Button>
                 <Popover
@@ -50,9 +51,25 @@ export function Search() {
                         horizontal: 'left',
                     }}
                 >
+                    <div className={classes['search-for-filters']}>
+                    <div className={classes['filter']}>
+                            <InputLabel sx={{ fontSize: '14px' }} >Search For</InputLabel>
+                            <Select size="small"
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={searchFor}
+                                label="Search For"
+                                onChange={(e) => setSearchFor(e.target.value)}
+                            >
+                                
+                                <MenuItem value='Professional'>Professional</MenuItem>
+                                <MenuItem value='Content'>Content</MenuItem>
+                            </Select>
+                        </div>
+                    </div>
                     <div className={classes['search-by-filters']}>
                         <div className={classes['filter']}>
-                            <InputLabel sx={{ fontSize: '14px' }} >Specialty</InputLabel>
+                            <InputLabel sx={{ fontSize: '14px' }} >Categories</InputLabel>
                             <Select size="small"
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
@@ -64,21 +81,21 @@ export function Search() {
                             </Select>
                         </div>
                         <div className={classes['filter']}>
-                            <InputLabel sx={{ fontSize: '14px' }} >Gender</InputLabel>
+                            <InputLabel sx={{ fontSize: '14px' }} >Instructor</InputLabel>
                             <Select size="small"
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={gender}
-                                label="Gender"
+                                label="Instructor"
                                 onChange={(e) => setGender(e.target.value)}
                             >
                                 <MenuItem value='Male'>Male</MenuItem>
                                 <MenuItem value='Female'>Female</MenuItem>
                             </Select>
                         </div>
-                        <div className={classes['filter']}>
+                        {/* <div className={classes['filter']}>
                         <CheckboxesTags/>
-                        </div>
+                        </div> */}
                     </div>
                 </Popover>
 
@@ -93,7 +110,7 @@ export function Search() {
 export function CheckboxesTags() {
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
     const checkedIcon = <CheckBoxIcon fontSize="small" />;
-    const cities = (City.getCitiesOfCountry('US') as any[]).slice(0,1000);
+    const cities = (City.getCitiesOfCountry('US')).slice(0,1000);
     return (
         <>
         <label htmlFor="checkboxes" style={{fontSize:'14px'}}>Location</label>
@@ -101,10 +118,10 @@ export function CheckboxesTags() {
             multiple
             id="checkboxes-tags-demo"
             limitTags={2}
-            options={cities as any[]}
+            options={cities}
             size="small"
             disableCloseOnSelect
-            getOptionLabel={(option:any) => `${option.name}, ${option.stateCode}`}
+            getOptionLabel={(option ) => `${option.name}, ${option.stateCode}`}
             renderOption={(props, option, { selected }) => (
                 <li {...props}>
                     <Checkbox

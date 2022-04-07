@@ -1,8 +1,8 @@
 import { Card, CardActionArea, CardMedia, Typography, CardContent } from '@mui/material';
 import { categories } from '../../models/filters';
+import { useRoutes } from 'react-router-dom';
 import './dashboard-content.scss';
 export function DashboardContent() {
-    const videos = [1, 2, 3, 4, 5, 6];
     const types = [
         {
             name: 'Weight Training',
@@ -77,7 +77,7 @@ export function DashboardContent() {
 
 
 
-function VideoTile(props: any) {
+function VideoTile(props ) {
     return (
         <Card sx={{ minWidth: 300, margin: '20px 20px 20px 0', maxHeight: 200 }}>
             <CardActionArea>

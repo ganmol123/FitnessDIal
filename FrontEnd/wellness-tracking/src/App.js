@@ -9,7 +9,6 @@ import Navbar from './components/navbar/navbar';
 import { CustomerTabs, ProfessionalTabs } from './models/tabs';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getUserDetails } from './services/user.service';
 import { useNavigate } from 'react-router-dom';
 import { Search } from './components/search/search';
 import store from './store';
@@ -18,27 +17,29 @@ import { Messages } from './components/messages/messages';
 
 function App() {
   const navigate = useNavigate();
-  const [tabs, setTabs] = useState<any>();
-
+  const [tabs, setTabs] = useState();
   const location = useLocation();
 
-  useEffect(()=>{
+
+  useEffect(() => {
     const user = store.getState().userDetails;
-    if (Object.keys(user).length>0) {
+    if (Object.keys(user).length > 0) {
       setTabs(user.user_type === 'Customer' ? CustomerTabs : ProfessionalTabs);
     }
     else {
-      if(location.pathname.includes('createPass')) {
+      if (location.pathname.includes('createPass')) {
         return;
       }
-      navigate('/login');
+      navigate('/login')
+
     }
   },[])
 
-  
+
+
   store.subscribe(() => {
     const user = store.getState().userDetails;
-    if (Object.keys(user).length>0) {
+    if (Object.keys(user).length > 0) {
       setTabs(user.user_type === 'Customer' ? CustomerTabs : ProfessionalTabs);
       navigate('/dashboard');
     }
@@ -61,7 +62,7 @@ function App() {
           <Route path='*' element={<LandingPage></LandingPage>}></Route>
           <Route path='dashboard' element={<Home></Home>}></Route>
           <Route path='profile' element={<Profile></Profile>}></Route>
-          <Route path='messages' element={<Messages/>}></Route>
+          <Route path='messages' element={<Messages />}></Route>
           <Route element={<div>Not found</div>}></Route>
         </Routes>
       </div>

@@ -16,12 +16,8 @@ import { DashboardContent } from '../../components/dashboard-content/dashboard-c
 const StyledTab = styled(Tab)({
     minHeight: "auto"
 });
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
-function TabPanel(props: TabPanelProps) {
+
+function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
     return (
@@ -41,8 +37,8 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-export function CustomerLandingPage(props: any) {
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+export function CustomerLandingPage(props) {
+    const handleChange = (event, newValue) => {
         setValue(newValue);
     };
     const [value, setValue] = useState(0);
@@ -52,7 +48,7 @@ export function CustomerLandingPage(props: any) {
     return (
         <div className="customer-landing-page">
             <div className="customer-landing-header">
-                <Button style={{marginRight:'2em'}} size="small" startIcon={<DownloadIcon/>} variant="text">My meal plans</Button>
+                <Button style={{ marginRight: '2em' }} size="small" startIcon={<DownloadIcon />} variant="text">My meal plans</Button>
                 <Box sx={{ borderBottom: 1, borderColor: 'lightgrey' }}>
                     <Tabs style={{ minHeight: '35px' }} onChange={handleChange} value={value}>
                         {tabs.map(tab => <StyledTab key={tab.name} style={{ textTransform: 'capitalize' }} label={tab.name} icon={tab.icon} iconPosition="start"></StyledTab>)}
