@@ -9,7 +9,7 @@ env_variables:
   SESSION_MAXAGE: "1800000"
   SENDGRID_API_KEY: "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"
   SENDER_MAIL: "anmgupta@iu.edu"
-  CLIENT_SIDE_URL: "https://user.fitnessdial.com/createPass"
+  CLIENT_SIDE_URL: "fitness-dial.web.app"
   REDIS_HOST: "redis-15796.c228.us-central1-1.gce.cloud.redislabs.com"
   REDIS_PORT: "15796"
   REDIS_PASSWORD: "TB9f6ArdfMNUVnNBfqLxat5QXwYxpqyI"

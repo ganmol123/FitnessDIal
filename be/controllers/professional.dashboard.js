@@ -31,6 +31,26 @@ async function readClient(req, res) {
   }
 }
 
+/**
+ * Get Client Info
+ * @param {Object} req
+ * @param {Object} res
+ */
+async function getAllProfessional(req, res) {
+  try {
+    const allProfessionals = await User.find({
+      user_type: "Professional",
+    });
+    res.status(200).send(allProfessionals);
+  } catch (error) {
+    logger.error("Error in getting all profesional data: " + error);
+    res.status(500).send({
+      message: "Something went wrong: " + error,
+    });
+  }
+}
+
 module.exports = {
   readClient,
+  getAllProfessional,
 };

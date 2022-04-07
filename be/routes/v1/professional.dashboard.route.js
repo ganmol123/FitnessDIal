@@ -7,4 +7,6 @@ const user = require("../../controllers/professional.dashboard");
 
 router.get("/:clientId", user.readClient);
 
+router.get("/", user.getAllProfessional);
+
 module.exports = router;
