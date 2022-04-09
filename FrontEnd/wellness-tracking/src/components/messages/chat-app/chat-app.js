@@ -66,7 +66,7 @@ export const ChatApp = () => {
             userName={name}
             userSecret={secret}
             renderChatSettings={() => <></>}
-            renderNewChatForm={(creds) => user.user_type === 'Customer' && renderChatForm(creds)}
+            renderNewChatForm={(creds) => user.user_type === 'Customer' && professionals.length && renderChatForm(creds)}
         />
     )
 }
