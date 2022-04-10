@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const CONSTANTS = require("../config/constants");
 const Schema = mongoose.Schema;
 
 const professionalInfoSchema = new Schema(
@@ -11,6 +12,9 @@ const professionalInfoSchema = new Schema(
       type: String,
       require: true,
     },
+    description: {
+      type: String,
+    },
     country: {
       type: String,
     },
@@ -20,8 +24,29 @@ const professionalInfoSchema = new Schema(
     onboarding_date: {
       type: Date,
     },
+    number: {
+      type: Number,
+    },
     active: {
       type: Boolean,
+    },
+    professional_type: {
+      type: String,
+      enum: [
+        CONSTANTS.PROFESSIONAL_TYPE.YOGA,
+        CONSTANTS.PROFESSIONAL_TYPE.MENTAL_HEALTH,
+        CONSTANTS.PROFESSIONAL_TYPE.WEIGHT_TRAINING,
+        CONSTANTS.PROFESSIONAL_TYPE.ZUMBA,
+      ],
+      require: true,
+    },
+    gender: {
+      type: String,
+      enum: [
+        CONSTANTS.GENDER.FEMALE,
+        CONSTANTS.GENDER.MALE,
+        CONSTANTS.GENDER.OTHERS,
+      ],
     },
   },
   { timestamps: true }

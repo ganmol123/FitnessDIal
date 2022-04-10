@@ -3,8 +3,6 @@ require("dotenv").config();
 module.exports = {
   PORT: process.env.PORT,
   NODE_ENV: process.env.NODE_ENV,
-  // ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
-  // REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
   MONGODB_URI: process.env.MONGODB_URI,
   REDIS_HOST: process.env.REDIS_HOST,
   REDIS_PORT: process.env.REDIS_PORT,
@@ -15,4 +13,7 @@ module.exports = {
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
   CLIENT_SIDE_URL: process.env.CLIENT_SIDE_URL,
   WHITELIST: process.env.WHITELIST,
+  BUCKET_NAME: process.env.BUCKET_NAME,
+  GCLOUD_PROJECT_ID: process.env.GCLOUD_PROJECT_ID,
+  KEYFILE_PATH: process.env.KEYFILE_PATH,
 };
