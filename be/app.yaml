@@ -14,3 +14,6 @@ env_variables:
   REDIS_PORT: "15796"
   REDIS_PASSWORD: "TB9f6ArdfMNUVnNBfqLxat5QXwYxpqyI"
   SESSION_SECRET: "ca918e68e284480aaa4315effb2695cc518961bdc886bd0cf5ad03f98d758164"
+  GCLOUD_PROJECT_ID: "vk-services-prod"
+  KEYFILE_PATH: "be/vk-services-prod-267aa3f466ef.json"
+  BUCKET_NAME: "fitnessdial-professional-videos"
