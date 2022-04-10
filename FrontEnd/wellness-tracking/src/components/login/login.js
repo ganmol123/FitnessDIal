@@ -66,7 +66,7 @@ export function Login() {
 
     const responseGoogle = async (response) => {
         const profile = response.profileObj
-        console.log(profile);
+        console.log(response);
         if (profile) {
 
             const user = {

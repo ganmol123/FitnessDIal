@@ -4,19 +4,39 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { City } from 'country-state-city';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './search.scss';
 import { categories } from "../../models/filters";
+import { getUsers } from "../messages/chat-app/chat-engine";
+import { ProfessionalsList } from "./professionals-list/professionals-list";
 export function Search() {
     const [gender, setGender] = useState('Male');
     const [category, setCategory] = useState(categories[0]);
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [searchFor, setSearchFor] = useState('Professional')
+    const [searchInput, setSearchInput] = useState('');
+    const [professionalsData, setProfessionalsData] = useState([]);
+    useEffect(() => {
+        getAllProfessionals();
+
+    }, [])
+
+    async function getAllProfessionals() {
+        const res = await getUsers();
+        const users = res.data;
+        const profs = users.filter(user => {
+            const user_type = JSON.parse(user.custom_json).user_type;
+            return user_type === 'Professional'
+        });
+        setProfessionalsData(profs);
+    }
+
+
     const useCustomStylesByIds = () => {
-        const myStyles = makeStyles((theme ) => {
+        const myStyles = makeStyles((theme) => {
             const stylesObj = {
-                'search-for-filters':{
-                    display:'flex'
+                'search-for-filters': {
+                    display: 'flex'
                 },
                 'search-by-filters': {
                     display: 'flex',
@@ -38,7 +58,7 @@ export function Search() {
         <div className="search-container">
             <div className="search-header" style={{ marginBottom: '30px', display: 'flex', fontWeight: 'bold' }}>Explore Fitness Professionals.</div>
             <div className="search-filters" style={{ display: 'flex', marginBottom: '30px' }}>
-                <Button id='filters-button' variant="text" startIcon={<FilterAltIcon />} onClick={(e ) => { setAnchorEl(e.currentTarget); setFiltersOpen(!filtersOpen) }}>
+                <Button id='filters-button' variant="text" startIcon={<FilterAltIcon />} onClick={(e) => { setAnchorEl(e.currentTarget); setFiltersOpen(!filtersOpen) }}>
                     Filters
                 </Button>
                 <Popover
@@ -52,7 +72,7 @@ export function Search() {
                     }}
                 >
                     <div className={classes['search-for-filters']}>
-                    <div className={classes['filter']}>
+                        <div className={classes['filter']}>
                             <InputLabel sx={{ fontSize: '14px' }} >Search For</InputLabel>
                             <Select size="small"
                                 labelId="demo-simple-select-label"
@@ -61,7 +81,7 @@ export function Search() {
                                 label="Search For"
                                 onChange={(e) => setSearchFor(e.target.value)}
                             >
-                                
+
                                 <MenuItem value='Professional'>Professional</MenuItem>
                                 <MenuItem value='Content'>Content</MenuItem>
                             </Select>
@@ -101,7 +121,11 @@ export function Search() {
 
             </div>
             <div className="search-input">
-                <TextField sx={{width:'500px'}} placeholder="Search" size="small"></TextField>
+                <TextField sx={{ width: '500px' }} onChange={(e) => setSearchInput(e.target.value)} placeholder="Search" size="small"></TextField>
+            </div>
+
+            <div className="professionals-list" style={{marginTop:'2em'}}>
+                {professionalsData.length && <ProfessionalsList professionalsData={professionalsData} />}
             </div>
         </div>
     )
@@ -110,35 +134,35 @@ export function Search() {
 export function CheckboxesTags() {
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
     const checkedIcon = <CheckBoxIcon fontSize="small" />;
-    const cities = (City.getCitiesOfCountry('US')).slice(0,1000);
+    const cities = (City.getCitiesOfCountry('US')).slice(0, 1000);
     return (
         <>
-        <label htmlFor="checkboxes" style={{fontSize:'14px'}}>Location</label>
-        <Autocomplete
-            multiple
-            id="checkboxes-tags-demo"
-            limitTags={2}
-            options={cities}
-            size="small"
-            disableCloseOnSelect
-            getOptionLabel={(option ) => `${option.name}, ${option.stateCode}`}
-            renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                    <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                    />
-                    {option.name}
-                </li>
-            )}
-            sx={{width:'350px'}}
-            renderInput={(params) => (
-                <TextField {...params} />
-            )}
+            <label htmlFor="checkboxes" style={{ fontSize: '14px' }}>Location</label>
+            <Autocomplete
+                multiple
+                id="checkboxes-tags-demo"
+                limitTags={2}
+                options={cities}
+                size="small"
+                disableCloseOnSelect
+                getOptionLabel={(option) => `${option.name}, ${option.stateCode}`}
+                renderOption={(props, option, { selected }) => (
+                    <li {...props}>
+                        <Checkbox
+                            icon={icon}
+                            checkedIcon={checkedIcon}
+                            style={{ marginRight: 8 }}
+                            checked={selected}
+                        />
+                        {option.name}
+                    </li>
+                )}
+                sx={{ width: '350px' }}
+                renderInput={(params) => (
+                    <TextField {...params} />
+                )}
 
-        />
+            />
         </>
     );
 }

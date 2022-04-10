@@ -5,7 +5,7 @@ import { CHAT_CONFIG } from '../../../models/chat-config';
 export const createUser = (user) => {
 
     axios.post('https://api.chatengine.io/users/', user
-    ,
+        ,
         {
             headers: {
                 'PRIVATE-KEY': CHAT_CONFIG.private_key
@@ -20,10 +20,10 @@ export const createUser = (user) => {
         });
 }
 
-export const getUsers = ()=> {
-    return axios.get('https://api.chatengine.io/users/',{
+export const getUsers = () => {
+    return axios.get('https://api.chatengine.io/users/', {
         headers: {
             'PRIVATE-KEY': CHAT_CONFIG.private_key
         }
     })
-}
+} 

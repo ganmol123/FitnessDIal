@@ -1,0 +1,15 @@
+.professional-profile {
+    height: 100vh;
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 3em;
+        justify-content: center;
+        .profile-name {
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+    }
+}

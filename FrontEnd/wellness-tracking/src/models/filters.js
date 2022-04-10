@@ -1,1 +1,1 @@
-export const categories = ['Weight Training', 'Yoga', 'Zumba', 'Mental health'];
+export const categories = ['All','Weight Training', 'Yoga', 'Zumba', 'Mental health'];
