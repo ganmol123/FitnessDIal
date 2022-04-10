@@ -5,8 +5,12 @@ const loginRouter = require("./v1/login.route");
 const passChangeRouter = require("./v1/pass_change.route");
 const professionalDashboardRouter = require("./v1/professional.dashboard.route");
 const clientDashboardRouter = require("./v1/client.dashboard.route");
+const adminRouter = require("./v1/admin.route");
 
 const router = express.Router();
+
+// ADMIN APIS
+router.use("/admin", adminRouter);
 
 // Auth New User endpoint
 router.use("/authnew", singUpRouter);
