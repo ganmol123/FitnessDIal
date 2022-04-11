@@ -9,10 +9,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/styles';
 import { Box } from '@mui/system';
 import DownloadIcon from '@mui/icons-material/Download';
+import store from '../../store';
 
 import { Search } from '../../components/search/search';
 import { MyCalendar } from '../../components/calendar/calendar';
-import { DashboardContent } from '../../components/dashboard-content/dashboard-content';
+import { CustomerDashboard } from '../../components/dashboard-content/customer-dashboard';
 const StyledTab = styled(Tab)({
     minHeight: "auto"
 });
@@ -38,17 +39,18 @@ function TabPanel(props) {
 }
 
 export function CustomerLandingPage(props) {
+    const user = store.getState().userDetails;
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
     const [value, setValue] = useState(0);
-    const tabs = [{ name: 'My Content', icon: <FormatListBulletedIcon />, component: <DashboardContent /> },
+    const tabs = [{ name: 'My Content', icon: <FormatListBulletedIcon />, component: <CustomerDashboard /> },
     { name: 'Search', icon: <SearchIcon />, component: <Search /> },
     { name: 'My Calendar', icon: <CalendarMonthIcon />, component: <MyCalendar /> }]
     return (
         <div className="customer-landing-page">
             <div className="customer-landing-header">
-                <Button style={{ marginRight: '2em' }} size="small" startIcon={<DownloadIcon />} variant="text">My meal plans</Button>
+                {  <Button style={{ marginRight: '2em' }} size="small" startIcon={<DownloadIcon />} variant="text">My meal plans</Button>}
                 <Box sx={{ borderBottom: 1, borderColor: 'lightgrey' }}>
                     <Tabs style={{ minHeight: '35px' }} onChange={handleChange} value={value}>
                         {tabs.map(tab => <StyledTab key={tab.name} style={{ textTransform: 'capitalize' }} label={tab.name} icon={tab.icon} iconPosition="start"></StyledTab>)}

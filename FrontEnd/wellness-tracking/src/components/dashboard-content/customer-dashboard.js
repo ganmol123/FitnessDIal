@@ -2,7 +2,7 @@ import { Card, CardActionArea, CardMedia, Typography, CardContent } from '@mui/m
 import { categories } from '../../models/filters';
 import { useRoutes } from 'react-router-dom';
 import './dashboard-content.scss';
-export function DashboardContent() {
+export function CustomerDashboard() {
     const types = [
         {
             name: 'Weight Training',
