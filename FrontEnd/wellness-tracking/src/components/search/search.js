@@ -9,6 +9,7 @@ import './search.scss';
 import { categories } from "../../models/filters";
 import { getUsers } from "../messages/chat-app/chat-engine";
 import { ProfessionalsList } from "./professionals-list/professionals-list";
+import store from "../../store";
 export function Search() {
     const [gender, setGender] = useState('Male');
     const [category, setCategory] = useState(categories[0]);
@@ -16,6 +17,8 @@ export function Search() {
     const [searchFor, setSearchFor] = useState('Professional')
     const [searchInput, setSearchInput] = useState('');
     const [professionalsData, setProfessionalsData] = useState([]);
+    const [searchResults, setSearchResuts] = useState([]);
+    const user = store.getState().userDetails;
     useEffect(() => {
         getAllProfessionals();
 
@@ -29,6 +32,20 @@ export function Search() {
             return user_type === 'Professional'
         });
         setProfessionalsData(profs);
+        setSearchResuts(profs);
+    }
+
+    const filterSearchResults = (input) => {
+        if(!input) {
+            setSearchResuts(professionalsData);
+            return;
+        }
+        const results = professionalsData.filter(data=>{
+            const name = `${data.first_name} ${data.last_name}`
+            return name.includes(searchInput)
+        });
+
+        setSearchResuts(results);
     }
 
 
@@ -57,7 +74,7 @@ export function Search() {
     return (
         <div className="search-container">
             <div className="search-header" style={{ marginBottom: '30px', display: 'flex', fontWeight: 'bold' }}>Explore Fitness Professionals.</div>
-            <div className="search-filters" style={{ display: 'flex', marginBottom: '30px' }}>
+            {user.user_type === 'Customer' && <div className="search-filters" style={{ display: 'flex', marginBottom: '30px' }}>
                 <Button id='filters-button' variant="text" startIcon={<FilterAltIcon />} onClick={(e) => { setAnchorEl(e.currentTarget); setFiltersOpen(!filtersOpen) }}>
                     Filters
                 </Button>
@@ -119,13 +136,13 @@ export function Search() {
                     </div>
                 </Popover>
 
-            </div>
+            </div>}
             <div className="search-input">
-                <TextField sx={{ width: '500px' }} onChange={(e) => setSearchInput(e.target.value)} placeholder="Search" size="small"></TextField>
+                <TextField sx={{ width: '500px' }} onChange={(e) => { setSearchInput(e.target.value); filterSearchResults(e.target.value) }} placeholder="Search" size="small"></TextField>
             </div>
 
-            <div className="professionals-list" style={{marginTop:'2em'}}>
-                {professionalsData.length && <ProfessionalsList professionalsData={professionalsData} />}
+            <div className="professionals-list" style={{ marginTop: '2em' }}>
+                {searchResults.length && <ProfessionalsList professionalsData={searchResults} />}
             </div>
         </div>
     )

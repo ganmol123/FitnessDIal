@@ -51,7 +51,7 @@ const ListElement = ({ data, setShowProfile, setProfessionalData }) => {
             <Avatar alt={data.username.toUpperCase()} src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <div className="list-item-container">
-            <div className="professional-name">{data.first_name.toUpperCase()} {data.last_name?.toUpperCase()}</div>
+            <div className="professional-name" style={{width:200}}>{data.first_name.toUpperCase()} {data.last_name?.toUpperCase()}</div>
             <div className="icons">
                 <div className='view-profile' onClick={() => {setShowProfile(true); setProfessionalData(data)}}>View Profile</div>
                 <div className='chat'> <ChatIcon color='primary' style={{cursor:"pointer"}}/></div>
