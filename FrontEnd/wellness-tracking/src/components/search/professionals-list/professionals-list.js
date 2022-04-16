@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ChatIcon from '@mui/icons-material/Chat';
 import './professionals-list.scss';
 import { Box, Drawer } from '@mui/material';
 import { Profile } from './profile/profile';
-import { createUser } from '../../messages/chat-app/chat-engine';
 export function ProfessionalsList({ professionalsData }) {
     const [showpProfile, setShowProfile] = useState(false);
     const [professionalData, setProfessionalData] = useState();
@@ -23,7 +21,7 @@ export function ProfessionalsList({ professionalsData }) {
     return (
         <div className='list-container'>
             <List sx={{ width: '100%', maxWidth: 800, bgcolor: 'background.paper' }}>
-                {professionalsData.map(prof => <ListElement data={prof} setShowProfile={setShowProfile} setProfessionalData={setProfessionalData} key={prof.username} />)}
+                {professionalsData.map(prof => <ListElement data={prof} setShowProfile={setShowProfile} setProfessionalData={setProfessionalData} key={prof._id} />)}
             </List>
             <Drawer
                 anchor="right"
@@ -36,7 +34,7 @@ export function ProfessionalsList({ professionalsData }) {
                     onClick={toggleDrawer('right', false)}
                     onKeyDown={toggleDrawer('right', false)}
                 >
-                    <Profile data={professionalData}/>
+                    <Profile id={professionalData?._id}/>
                 </Box>
 
             </Drawer>
@@ -48,7 +46,7 @@ export function ProfessionalsList({ professionalsData }) {
 const ListElement = ({ data, setShowProfile, setProfessionalData }) => {
     return (<><ListItem style={{ display: 'flex', alignItems: 'center' }} alignItems="flex-start">
         <ListItemAvatar>
-            <Avatar alt={data.username.toUpperCase()} src="/static/images/avatar/1.jpg" />
+            <Avatar alt={data?.first_name?.toUpperCase()} src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <div className="list-item-container">
             <div className="professional-name" style={{width:200}}>{data.first_name.toUpperCase()} {data.last_name?.toUpperCase()}</div>

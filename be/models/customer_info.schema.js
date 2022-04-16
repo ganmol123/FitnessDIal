@@ -21,6 +21,18 @@ const customerInfoSchema = new Schema(
     onboarding_date: {
       type: Date,
     },
+    age: {
+      type: Number
+    },
+    weight: {
+      type: Number
+    },
+    height: {
+      type: Number
+    },
+    bmi: {
+      type: Number
+    },
     current_subscription: {
       type: Schema.Types.ObjectId,
       ref: CONSTANTS.MODELS.SUBSCRIPTION,

@@ -139,7 +139,7 @@ export function Login() {
                             </div>
                             <TextField size="small" type="email" required className="input-text" onChange={handleUserName} id="outlined-basic" label="Username" variant="outlined" />
                             <TextField size="small" required type="password" onChange={handlePassword} className="input-text" id="outlined-basic-password" label="Password" variant="outlined"></TextField>
-                            <Button size="small" type="submit" className="input-text" variant="contained">Sign In</Button>
+                            <Button size="small" id="signIn" type="submit" className="input-text" variant="contained">Sign In</Button>
                             <p className="forgot" onClick={forgotPassoword}>Forgot Password?</p>
                             <div className="social-media-login">
                                 {/* <GoogleButton style={{ width: '260px' }} onClick={() => { setgoogleLogin(true) }}></GoogleButton> */}
@@ -159,7 +159,7 @@ export function Login() {
                                 <div className="enter-name">Enter your email</div>
                                 <TextField size="small" type="email" required className="input-text"
                                     onChange={handleUserName} id="outlined-basic" label="Username" variant="outlined" />
-                                <Button size="small" type="submit" className="input-text" variant="contained" onSubmit={resetPassword}>Reset Password</Button>
+                                <Button size="small" id="resetPassword" type="submit" className="input-text" variant="contained" onSubmit={resetPassword}>Reset Password</Button>
                             </div>
                         }
                     </div>

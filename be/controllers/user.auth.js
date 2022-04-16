@@ -79,7 +79,7 @@ async function signUp(req, res) {
     );
 
     // create password reset url from token
-    const url = `${CONFIG.CLIENT_SIDE_URL}?id=${user._id}&token=${token}`;
+    const url = `${CONFIG.CLIENT_SIDE_URL}/createPass/?id=${user._id}&token=${token}`;
 
     // send email
     if (user_type == "Customer")

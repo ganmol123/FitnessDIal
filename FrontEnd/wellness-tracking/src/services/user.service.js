@@ -36,3 +36,7 @@ export const login = (username , password ) => {
 export const forgot = (username ) => axios.post('/api/authnew/forgot', {
     username
 });
+
+export const getAllProfessionals = ()=> axios.get('/api/professional/dashboard/')
+
+export const getProfessionalData = (id)=> axios.get(`/api/professional/dashboard/${id}`);

@@ -7,9 +7,9 @@ import { City } from 'country-state-city';
 import { useState, useEffect } from "react";
 import './search.scss';
 import { categories } from "../../models/filters";
-import { getUsers } from "../messages/chat-app/chat-engine";
 import { ProfessionalsList } from "./professionals-list/professionals-list";
 import store from "../../store";
+import { getAllProfessionals } from "../../services/user.service";
 export function Search() {
     const [gender, setGender] = useState('Male');
     const [category, setCategory] = useState(categories[0]);
@@ -20,19 +20,15 @@ export function Search() {
     const [searchResults, setSearchResuts] = useState([]);
     const user = store.getState().userDetails;
     useEffect(() => {
-        getAllProfessionals();
+        getProfessionals();
 
     }, [])
 
-    async function getAllProfessionals() {
-        const res = await getUsers();
-        const users = res.data;
-        const profs = users.filter(user => {
-            const user_type = JSON.parse(user.custom_json).user_type;
-            return user_type === 'Professional'
-        });
-        setProfessionalsData(profs);
-        setSearchResuts(profs);
+
+    async function getProfessionals() {
+        const { data } = await getAllProfessionals();
+        setProfessionalsData(data);
+        setSearchResuts(data);
     }
 
     const filterSearchResults = (input) => {
