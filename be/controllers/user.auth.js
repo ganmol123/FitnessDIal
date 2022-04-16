@@ -36,6 +36,7 @@ async function signUp(req, res) {
   if (userExists != null || userExists) {
     res.status(401).send({
       message: "Bad request params - email already exists. Try logging in!",
+      userInfo: userExists
     });
     return;
   }
@@ -89,6 +90,7 @@ async function signUp(req, res) {
 
     res.status(200).send({
       message: "Sent mail for Authentication!",
+      userInfo: user
     });
   } catch (error) {
     logger.error("Error in sign up: " + error);
@@ -158,10 +160,11 @@ async function login(req, res) {
   }
   try {
     // const validated =
-    await authenticate(username, password);
+    const userInfo = await authenticate(username, password);
     // req.session.user = validated;
     res.status(200).send({
       message: "Successfully logged in!",
+      userInfo: userInfo
     });
   } catch (error) {
     logger.error("Error in authenticating: " + error);
@@ -283,12 +286,13 @@ async function authenticate(email, password) {
 
     const match = bcrypt.compareSync(password, user.password);
     if (match) {
-      const user_info = {
-        first_name: user.first_name,
-        email: user.email,
-        userId: user._id,
-      };
-      return user_info;
+      // const user_info = {
+      //   first_name: user.first_name,
+      //   last_name: user.last_name,
+      //   email: user.email,
+      //   userId: user._id,
+      // };
+      return user;
     } else {
       logger.error("Password is not valid!");
       return Promise.reject("Password is not valid!");
