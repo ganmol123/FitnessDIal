@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Checkbox, InputLabel, MenuItem, Popover, Select, TextField } from "@mui/material";
+import { Autocomplete, Button, Checkbox, CircularProgress, InputLabel, MenuItem, Popover, Select, TextField } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -11,13 +11,18 @@ import { ProfessionalsList } from "./professionals-list/professionals-list";
 import store from "../../store";
 import { getAllProfessionals } from "../../services/user.service";
 export function Search() {
-    const [gender, setGender] = useState('Male');
+    const [gender, setGender] = useState('Any');
     const [category, setCategory] = useState(categories[0]);
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [searchFor, setSearchFor] = useState('Professional')
     const [searchInput, setSearchInput] = useState('');
     const [professionalsData, setProfessionalsData] = useState([]);
-    const [searchResults, setSearchResuts] = useState([]);
+    const [searchResults, setSearchResuts] = useState();
+    const [filters, setFilters] = useState({
+        name: '',
+        professional_type: 'All',
+        gender: 'Any'
+    });
     const user = store.getState().userDetails;
     useEffect(() => {
         getProfessionals();
@@ -31,17 +36,33 @@ export function Search() {
         setSearchResuts(data);
     }
 
-    const filterSearchResults = (input) => {
-        if(!input) {
+    const filterSearchResults = (filters) => {
+        if (!filters) {
             setSearchResuts(professionalsData);
             return;
         }
-        const results = professionalsData.filter(data=>{
-            const name = `${data.first_name} ${data.last_name}`
-            return name.includes(searchInput)
+
+        const filterWithNames = professionalsData.filter(data => {
+            const name = `${data.first_name?.toLowerCase()} ${data.last_name?.toLowerCase()}`
+            return name.includes(filters.name?.toLowerCase())
         });
 
-        setSearchResuts(results);
+        const filterWithType = filterWithNames.filter(data => {
+
+            if (filters.professional_type === 'All') {
+                return true;
+            }
+            return data.professional_type === filters.professional_type
+        });
+
+        const filterWithGender = filterWithType.filter(data => {
+            if (filters.gender === 'Any') {
+                return true;
+            }
+            return data.gender === filters.gender;
+        });
+
+        setSearchResuts(filterWithGender);
     }
 
 
@@ -64,6 +85,15 @@ export function Search() {
 
         return myStyles();
     };
+
+    const updateFilters = (filter) => {
+
+        setFilters(prev => {
+            const newFilters = { ...prev, ...filter };
+            filterSearchResults(newFilters);
+            return newFilters
+        });
+    }
     const [anchorEl, setAnchorEl] = useState(null)
 
     const classes = useCustomStylesByIds();
@@ -108,7 +138,7 @@ export function Search() {
                                 id="demo-simple-select"
                                 value={category}
                                 label="Category"
-                                onChange={(e) => setCategory(e.target.value)}
+                                onChange={(e) => { setCategory(e.target.value); updateFilters({ professional_type: e.target.value }) }}
                             >
                                 {categories.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
                             </Select>
@@ -120,8 +150,9 @@ export function Search() {
                                 id="demo-simple-select"
                                 value={gender}
                                 label="Instructor"
-                                onChange={(e) => setGender(e.target.value)}
+                                onChange={(e) => { setGender(e.target.value); updateFilters({ gender: e.target.value }) }}
                             >
+                                <MenuItem value='Any'>Any</MenuItem>
                                 <MenuItem value='Male'>Male</MenuItem>
                                 <MenuItem value='Female'>Female</MenuItem>
                             </Select>
@@ -134,11 +165,11 @@ export function Search() {
 
             </div>}
             <div className="search-input">
-                <TextField sx={{ width: '500px' }} onChange={(e) => { setSearchInput(e.target.value); filterSearchResults(e.target.value) }} placeholder="Search" size="small"></TextField>
+                <TextField sx={{ width: '500px' }} onChange={(e) => { setSearchInput(e.target.value); updateFilters({ name: e.target.value }) }} placeholder="Search" size="small"></TextField>
             </div>
 
             <div className="professionals-list" style={{ marginTop: '2em' }}>
-                {searchResults.length && <ProfessionalsList professionalsData={searchResults} />}
+                {searchResults ? (searchResults.length ? <ProfessionalsList professionalsData={searchResults} /> : 'No matching results found' ) : <CircularProgress />}
             </div>
         </div>
     )
