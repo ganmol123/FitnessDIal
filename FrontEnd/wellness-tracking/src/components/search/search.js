@@ -1,22 +1,76 @@
-import { Autocomplete, Button, Checkbox, InputLabel, MenuItem, Popover, Select, TextField } from "@mui/material";
+import { Autocomplete, Button, Checkbox, CircularProgress, InputLabel, MenuItem, Popover, Select, TextField } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { City } from 'country-state-city';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './search.scss';
 import { categories } from "../../models/filters";
+import { ProfessionalsList } from "./professionals-list/professionals-list";
+import store from "../../store";
+import { getAllProfessionals } from "../../services/user.service";
 export function Search() {
-    const [gender, setGender] = useState('Male');
+    const [gender, setGender] = useState('Any');
     const [category, setCategory] = useState(categories[0]);
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [searchFor, setSearchFor] = useState('Professional')
+    const [searchInput, setSearchInput] = useState('');
+    const [professionalsData, setProfessionalsData] = useState([]);
+    const [searchResults, setSearchResuts] = useState();
+    const [filters, setFilters] = useState({
+        name: '',
+        professional_type: 'All',
+        gender: 'Any'
+    });
+    const user = store.getState().userDetails;
+    useEffect(() => {
+        getProfessionals();
+
+    }, [])
+
+
+    async function getProfessionals() {
+        const { data } = await getAllProfessionals();
+        setProfessionalsData(data);
+        setSearchResuts(data);
+    }
+
+    const filterSearchResults = (filters) => {
+        if (!filters) {
+            setSearchResuts(professionalsData);
+            return;
+        }
+
+        const filterWithNames = professionalsData.filter(data => {
+            const name = `${data.first_name?.toLowerCase()} ${data.last_name?.toLowerCase()}`
+            return name.includes(filters.name?.toLowerCase())
+        });
+
+        const filterWithType = filterWithNames.filter(data => {
+
+            if (filters.professional_type === 'All') {
+                return true;
+            }
+            return data.professional_type === filters.professional_type
+        });
+
+        const filterWithGender = filterWithType.filter(data => {
+            if (filters.gender === 'Any') {
+                return true;
+            }
+            return data.gender === filters.gender;
+        });
+
+        setSearchResuts(filterWithGender);
+    }
+
+
     const useCustomStylesByIds = () => {
-        const myStyles = makeStyles((theme ) => {
+        const myStyles = makeStyles((theme) => {
             const stylesObj = {
-                'search-for-filters':{
-                    display:'flex'
+                'search-for-filters': {
+                    display: 'flex'
                 },
                 'search-by-filters': {
                     display: 'flex',
@@ -31,14 +85,23 @@ export function Search() {
 
         return myStyles();
     };
+
+    const updateFilters = (filter) => {
+
+        setFilters(prev => {
+            const newFilters = { ...prev, ...filter };
+            filterSearchResults(newFilters);
+            return newFilters
+        });
+    }
     const [anchorEl, setAnchorEl] = useState(null)
 
     const classes = useCustomStylesByIds();
     return (
         <div className="search-container">
             <div className="search-header" style={{ marginBottom: '30px', display: 'flex', fontWeight: 'bold' }}>Explore Fitness Professionals.</div>
-            <div className="search-filters" style={{ display: 'flex', marginBottom: '30px' }}>
-                <Button id='filters-button' variant="text" startIcon={<FilterAltIcon />} onClick={(e ) => { setAnchorEl(e.currentTarget); setFiltersOpen(!filtersOpen) }}>
+            {user.user_type === 'Customer' && <div className="search-filters" style={{ display: 'flex', marginBottom: '30px' }}>
+                <Button id='filters-button' variant="text" startIcon={<FilterAltIcon />} onClick={(e) => { setAnchorEl(e.currentTarget); setFiltersOpen(!filtersOpen) }}>
                     Filters
                 </Button>
                 <Popover
@@ -52,7 +115,7 @@ export function Search() {
                     }}
                 >
                     <div className={classes['search-for-filters']}>
-                    <div className={classes['filter']}>
+                        <div className={classes['filter']}>
                             <InputLabel sx={{ fontSize: '14px' }} >Search For</InputLabel>
                             <Select size="small"
                                 labelId="demo-simple-select-label"
@@ -61,7 +124,7 @@ export function Search() {
                                 label="Search For"
                                 onChange={(e) => setSearchFor(e.target.value)}
                             >
-                                
+
                                 <MenuItem value='Professional'>Professional</MenuItem>
                                 <MenuItem value='Content'>Content</MenuItem>
                             </Select>
@@ -75,7 +138,7 @@ export function Search() {
                                 id="demo-simple-select"
                                 value={category}
                                 label="Category"
-                                onChange={(e) => setCategory(e.target.value)}
+                                onChange={(e) => { setCategory(e.target.value); updateFilters({ professional_type: e.target.value }) }}
                             >
                                 {categories.map(type => <MenuItem key={type} value={type}>{type}</MenuItem>)}
                             </Select>
@@ -87,8 +150,9 @@ export function Search() {
                                 id="demo-simple-select"
                                 value={gender}
                                 label="Instructor"
-                                onChange={(e) => setGender(e.target.value)}
+                                onChange={(e) => { setGender(e.target.value); updateFilters({ gender: e.target.value }) }}
                             >
+                                <MenuItem value='Any'>Any</MenuItem>
                                 <MenuItem value='Male'>Male</MenuItem>
                                 <MenuItem value='Female'>Female</MenuItem>
                             </Select>
@@ -99,9 +163,13 @@ export function Search() {
                     </div>
                 </Popover>
 
-            </div>
+            </div>}
             <div className="search-input">
-                <TextField sx={{width:'500px'}} placeholder="Search" size="small"></TextField>
+                <TextField sx={{ width: '500px' }} onChange={(e) => { setSearchInput(e.target.value); updateFilters({ name: e.target.value }) }} placeholder="Search" size="small"></TextField>
+            </div>
+
+            <div className="professionals-list" style={{ marginTop: '2em' }}>
+                {searchResults ? (searchResults.length ? <ProfessionalsList professionalsData={searchResults} /> : 'No matching results found' ) : <CircularProgress />}
             </div>
         </div>
     )
@@ -110,35 +178,35 @@ export function Search() {
 export function CheckboxesTags() {
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
     const checkedIcon = <CheckBoxIcon fontSize="small" />;
-    const cities = (City.getCitiesOfCountry('US')).slice(0,1000);
+    const cities = (City.getCitiesOfCountry('US')).slice(0, 1000);
     return (
         <>
-        <label htmlFor="checkboxes" style={{fontSize:'14px'}}>Location</label>
-        <Autocomplete
-            multiple
-            id="checkboxes-tags-demo"
-            limitTags={2}
-            options={cities}
-            size="small"
-            disableCloseOnSelect
-            getOptionLabel={(option ) => `${option.name}, ${option.stateCode}`}
-            renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                    <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                    />
-                    {option.name}
-                </li>
-            )}
-            sx={{width:'350px'}}
-            renderInput={(params) => (
-                <TextField {...params} />
-            )}
+            <label htmlFor="checkboxes" style={{ fontSize: '14px' }}>Location</label>
+            <Autocomplete
+                multiple
+                id="checkboxes-tags-demo"
+                limitTags={2}
+                options={cities}
+                size="small"
+                disableCloseOnSelect
+                getOptionLabel={(option) => `${option.name}, ${option.stateCode}`}
+                renderOption={(props, option, { selected }) => (
+                    <li {...props}>
+                        <Checkbox
+                            icon={icon}
+                            checkedIcon={checkedIcon}
+                            style={{ marginRight: 8 }}
+                            checked={selected}
+                        />
+                        {option.name}
+                    </li>
+                )}
+                sx={{ width: '350px' }}
+                renderInput={(params) => (
+                    <TextField {...params} />
+                )}
 
-        />
+            />
         </>
     );
 }

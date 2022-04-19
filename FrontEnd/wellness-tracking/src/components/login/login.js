@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import { getChats, addPerson } from 'react-chat-engine';
-import { Button, Radio, Alert, Backdrop, CircularProgress, AlertColor } from "@mui/material";
+import { Button, Radio, Alert, Backdrop, CircularProgress } from "@mui/material";
 import GoogleLogin from 'react-google-login';
 import store from '../../store';
 import { forgot, login, setUserDetails, signUp } from '../../services/user.service';
@@ -47,15 +46,8 @@ export function Login() {
         e.preventDefault();
         setLoading(true)
         try {
-            const user = await login(username, password);
-            const temp = {
-                first_name: 'Sai Kiran',
-                last_name: 'Jella',
-                email: 'jellasaikiran1@gmail.com',
-                phone: '8123698251',
-                user_type: user_type
-            }
-            navigateToHome(temp);
+            const {data} = await login(username, password);
+            navigateToHome(data.userInfo);
         }
         catch (e) {
             setLoading(false)
@@ -66,7 +58,7 @@ export function Login() {
 
     const responseGoogle = async (response) => {
         const profile = response.profileObj
-        console.log(profile);
+        console.log(response);
         if (profile) {
 
             const user = {
@@ -77,15 +69,16 @@ export function Login() {
             }
             try {
                 setLoading(true);
-                await signUp(user);
+                const {data} = await signUp(user);
                 createUser({...user, username:user.first_name, secret: user.email.split('@')[0]+ "@" +user.first_name, custom_json:JSON.stringify(user) })
-                navigateToHome(user);
+                navigateToHome(data.userInfo);
             }
             catch (e) {
                 setLoading(false)
-                const msg = e.response?.data?.message;
+                const {data} = e.response;
+                const msg = data?.message;
                 if (msg === 'Bad request params - email already exists. Try logging in!') {
-                    navigateToHome(user);
+                    navigateToHome(data.userInfo);
                 }
             }
 
@@ -139,7 +132,7 @@ export function Login() {
                             </div>
                             <TextField size="small" type="email" required className="input-text" onChange={handleUserName} id="outlined-basic" label="Username" variant="outlined" />
                             <TextField size="small" required type="password" onChange={handlePassword} className="input-text" id="outlined-basic-password" label="Password" variant="outlined"></TextField>
-                            <Button size="small" type="submit" className="input-text" variant="contained">Sign In</Button>
+                            <Button size="small" id="signIn" type="submit" className="input-text" variant="contained">Sign In</Button>
                             <p className="forgot" onClick={forgotPassoword}>Forgot Password?</p>
                             <div className="social-media-login">
                                 {/* <GoogleButton style={{ width: '260px' }} onClick={() => { setgoogleLogin(true) }}></GoogleButton> */}
@@ -159,7 +152,7 @@ export function Login() {
                                 <div className="enter-name">Enter your email</div>
                                 <TextField size="small" type="email" required className="input-text"
                                     onChange={handleUserName} id="outlined-basic" label="Username" variant="outlined" />
-                                <Button size="small" type="submit" className="input-text" variant="contained" onSubmit={resetPassword}>Reset Password</Button>
+                                <Button size="small" id="resetPassword" className="input-text" variant="contained" onClick={resetPassword}>Reset Password</Button>
                             </div>
                         }
                     </div>

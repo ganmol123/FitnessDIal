@@ -3,8 +3,8 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import React, { useEffect, useState } from 'react'
-import { getUsers } from './chat-engine';
+import { useEffect, useState } from 'react'
+import { getAllProfessionals } from '../../../services/user.service';
 
 import { ChatEngine, getOrCreateChat } from 'react-chat-engine'
 import './chat-engine.scss';
@@ -15,9 +15,8 @@ export const ChatApp = () => {
     const [professionals, setProfessionals] = useState([]);
     const name = user.first_name;
     const secret = user.email.split('@')[0] + "@" + user.first_name
-    const [username, setUsername] = useState('');
     useEffect(() => {
-        getAllProfessionals();
+        getProfessionals();
     }, [])
 
     function createDirectChat(creds) {
@@ -29,14 +28,9 @@ export const ChatApp = () => {
         )
     }
 
-    async function getAllProfessionals() {
-        const res = await getUsers();
-        const users = res.data;
-        const profs = users.filter(user => {
-            const user_type = JSON.parse(user.custom_json).user_type;
-            return user_type === 'Professional'
-        });
-        setProfessionals(profs);
+    async function getProfessionals() {
+        const {data} = await getAllProfessionals();
+        setProfessionals(data);
     }
 
 
