@@ -9,6 +9,7 @@ module.exports = {
     ZUMBA: "Zumba",
     WEIGHT_TRAINING: "WeightTraining",
     MENTAL_HEALTH: "MentalHealth",
+    DIETICIAN: "Dietician",
   },
   MODELS: {
     USER: "User",
@@ -21,5 +22,9 @@ module.exports = {
     MALE: "Male",
     FEMALE: "Female",
     OTHERS: "Others",
+  },
+  FILE_TYPE: {
+    VIDEO: "Video",
+    DOCUMENT: "Document",
   },
 };

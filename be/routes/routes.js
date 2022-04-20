@@ -5,12 +5,13 @@ const loginRouter = require("./v1/login.route");
 const passChangeRouter = require("./v1/pass_change.route");
 const professionalDashboardRouter = require("./v1/professional.dashboard.route");
 const clientDashboardRouter = require("./v1/client.dashboard.route");
-const adminRouter = require("./v1/admin.route");
+const masterAdminRouter = require("./v1/MASTER.ADMIN.ROUTE");
+const adminDashboardRouter = require("./v1/admin.dashboard.route");
 
 const router = express.Router();
 
 // ADMIN APIS
-router.use("/admin", adminRouter);
+router.use("/admin", masterAdminRouter);
 
 // Auth New User endpoint
 router.use("/authnew", singUpRouter);
@@ -26,5 +27,8 @@ router.use("/professional/dashboard", professionalDashboardRouter);
 
 // Customer Dashboard endpoint
 router.use("/customer/dashboard", clientDashboardRouter);
+
+// ADMIN APIS
+router.use("/admin/dashboard", adminDashboardRouter);
 
 module.exports = router;

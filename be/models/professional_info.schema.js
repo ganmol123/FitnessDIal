@@ -37,6 +37,7 @@ const professionalInfoSchema = new Schema(
         CONSTANTS.PROFESSIONAL_TYPE.MENTAL_HEALTH,
         CONSTANTS.PROFESSIONAL_TYPE.WEIGHT_TRAINING,
         CONSTANTS.PROFESSIONAL_TYPE.ZUMBA,
+        CONSTANTS.PROFESSIONAL_TYPE.DIETICIAN,
       ],
       require: true,
     },

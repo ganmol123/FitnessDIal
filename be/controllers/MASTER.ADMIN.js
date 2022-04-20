@@ -1,8 +1,5 @@
 /**
- * API's for Admin
- * Create professional
- * Create user
- * Create admin
+ * API's for Master Admin for testing
  */
 
 const CONSTANTS = require("../config/constants");
