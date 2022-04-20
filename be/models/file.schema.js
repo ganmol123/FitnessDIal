@@ -17,6 +17,11 @@ const fileInfoSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    file_type: {
+      type: String,
+      enum: [CONSTANTS.FILE_TYPE.DOCUMENT, CONSTANTS.FILE_TYPE.VIDEO],
+      require: true,
+    },
   },
   { timestamps: true }
 );

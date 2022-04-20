@@ -22,4 +22,8 @@ module.exports = {
     FEMALE: "Female",
     OTHERS: "Others",
   },
+  FILE_TYPE: {
+    VIDEO: "Video",
+    DOCUMENT: "Document",
+  },
 };

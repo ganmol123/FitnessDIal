@@ -42,10 +42,10 @@ async function getAllProfessional(req, res) {
     const allProfessionals = await User.find({
       user_type: "Professional",
     })
-      .select("activated -_id")
+      .select("activated")
       .populate({
         path: "professional_info",
-        select: "name email address professional_type number description -_id",
+        select: "name email address professional_type number description",
       });
     res.status(200).send(allProfessionals);
   } catch (error) {
@@ -61,6 +61,7 @@ async function uploadFile(req, res) {
     const response = await new FileInfoSchema({
       file_public_url: req.file_public_url,
       professional_id: req.params.clientId,
+      file_type: req.query.type,
     });
 
     await response.save();
