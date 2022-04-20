@@ -16,7 +16,8 @@ module.exports = {
     CUSTOMER_INFO: "CustomerInfo",
     PROFESSIONAL_INFO: "ProfessionalInfo",
     ADMIN_INFO: "AdminInfo",
-    SUBSCRIPTION: "Subscription",
+    PLANS: "PlansSchema",
+    FILES: "FileInfoSchema",
   },
   GENDER: {
     MALE: "Male",

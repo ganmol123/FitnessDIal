@@ -22,21 +22,26 @@ const customerInfoSchema = new Schema(
       type: Date,
     },
     age: {
-      type: Number
+      type: Number,
     },
     weight: {
-      type: Number
+      type: Number,
     },
     height: {
-      type: Number
+      type: Number,
     },
     bmi: {
-      type: Number
+      type: Number,
     },
-    current_subscription: {
-      type: Schema.Types.ObjectId,
-      ref: CONSTANTS.MODELS.SUBSCRIPTION,
+    primary_goal: {
+      type: String,
     },
+    plans_enrolled: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: CONSTANTS.MODELS.PLANS,
+      },
+    ],
   },
   { timestamps: true }
 );
