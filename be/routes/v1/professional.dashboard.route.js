@@ -7,7 +7,7 @@ const { fileUploader } = require("../../middleware/fileUploader");
 
 const user = require("../../controllers/professional.dashboard");
 
-router.get("/:clientId", user.readClient);
+router.get("/:professionalId", user.readProfessional);
 
 router.get("/", user.getAllProfessional);
 

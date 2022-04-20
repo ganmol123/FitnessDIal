@@ -9,6 +9,7 @@ module.exports = {
     ZUMBA: "Zumba",
     WEIGHT_TRAINING: "WeightTraining",
     MENTAL_HEALTH: "MentalHealth",
+    DIETICIAN: "Dietician",
   },
   MODELS: {
     USER: "User",

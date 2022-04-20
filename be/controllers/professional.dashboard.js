@@ -15,17 +15,18 @@ const { FileInfoSchema } = require("../models/file.schema");
  * @param {Object} req
  * @param {Object} res
  */
-async function readClient(req, res) {
+async function readProfessional(req, res) {
   try {
-    const client = await User.findById(req.params.clientId);
-    const result = {
-      first_name: client.first_name,
-      last_name: client.last_name,
-      email: client.email,
-    };
-    res.status(200).send(result);
+    const professional = await User.findById(req.params.professionalId)
+      .select("activated")
+      .populate({
+        path: "professional_info",
+        select:
+          "name email address professional_type number description gender",
+      });
+    res.status(200).send(professional);
   } catch (error) {
-    logger.error("Error in getting Client info: " + error);
+    logger.error("Error in getting professional info: " + error);
     res.status(500).send({
       message: "Something went wrong: " + error,
     });
@@ -45,7 +46,8 @@ async function getAllProfessional(req, res) {
       .select("activated")
       .populate({
         path: "professional_info",
-        select: "name email address professional_type number description",
+        select:
+          "name email address professional_type number description gender",
       });
     res.status(200).send(allProfessionals);
   } catch (error) {
@@ -79,7 +81,7 @@ async function uploadFile(req, res) {
 }
 
 module.exports = {
-  readClient,
+  readProfessional,
   getAllProfessional,
   uploadFile,
 };
