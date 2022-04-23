@@ -77,18 +77,18 @@ export function CustomerDashboard() {
 
 
 
-function VideoTile(props ) {
+export function VideoTile({data} ) {
     return (
         <Card sx={{ minWidth: 300, margin: '20px 20px 20px 0', maxHeight: 200 }}>
             <CardActionArea>
                 <CardMedia
                     height="140"
                     component="iframe"
-                    image={props.data?.url}
+                    image={data?.url}
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                        {props.data?.name}
+                        {data?.name}
                     </Typography>
                     {/* <Typography variant="body2" color="text.secondary">
                         Lizards are a widespread group of squamate reptiles, with over 6,000
