@@ -9,6 +9,8 @@ const user = require("../../controllers/professional.dashboard");
 
 router.get("/:professionalId", user.readProfessional);
 
+router.post("/update/:professionalId", user.updateProfessional);
+
 router.get("/", user.getAllProfessional);
 
 router.post(

@@ -5,8 +5,10 @@
  * Get Calendar
  */
 
+const lodash = require("lodash");
 const logger = require("../utils/logger");
 const { User } = require("../models/user.schema");
+const { CustomerInfo } = require("../models/customer_info.schema");
 
 /**
  * Get Client Info
@@ -33,7 +35,42 @@ async function readClient(req, res) {
 }
 
 /**
- * Get Client Info
+ * Update candiate
+ * @param {Object} req
+ * @param {Object} res
+ */
+async function updateClient(req, res) {
+  try {
+    if (lodash.isEmpty(req.body)) {
+      return res.status(400).send({
+        message: "Body cannot be empty!",
+      });
+    }
+
+    if (req.body.name || req.body.email) {
+      return res.status(400).send({
+        message:
+          "Body cannot contain name and email and they can't be updated. Contact Customer support!",
+      });
+    }
+
+    const client = await User.findById(req.params.clientId);
+    const candidatedata = await CustomerInfo.findByIdAndUpdate(
+      client.customer_info,
+      req.body,
+      { new: true }
+    );
+    res.status(200).send(candidatedata);
+  } catch (error) {
+    logger.error("Error in updating Customer data: " + error);
+    res.status(500).send({
+      message: "Something went wrong." + error,
+    });
+  }
+}
+
+/**
+ * Get All the plans and videos uploaded by the client
  * @param {Object} req
  * @param {Object} res
  */
@@ -64,4 +101,5 @@ async function getPlans(req, res) {
 module.exports = {
   readClient,
   getPlans,
+  updateClient,
 };
