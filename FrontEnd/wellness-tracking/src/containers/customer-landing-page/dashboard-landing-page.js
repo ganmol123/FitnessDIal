@@ -14,6 +14,7 @@ import store from '../../store';
 import { Search } from '../../components/search/search';
 import { MyCalendar } from '../../components/calendar/calendar';
 import { CustomerDashboard } from '../../components/dashboard-content/customer-dashboard';
+import { ProfessionalDashboard } from '../../components/dashboard-content/professional-dashboard';
 const StyledTab = styled(Tab)({
     minHeight: "auto"
 });
@@ -44,7 +45,7 @@ export function CustomerLandingPage(props) {
         setValue(newValue);
     };
     const [value, setValue] = useState(0);
-    const tabs = [{ name: 'My Content', icon: <FormatListBulletedIcon />, component: <CustomerDashboard /> },
+    const tabs = [{ name: 'My Content', icon: <FormatListBulletedIcon />, component: user.user_type==='Customer' ? <CustomerDashboard /> : <ProfessionalDashboard/> },
     { name: 'Search', icon: <SearchIcon />, component: <Search /> },
     { name: 'My Calendar', icon: <CalendarMonthIcon />, component: <MyCalendar /> }]
     return (

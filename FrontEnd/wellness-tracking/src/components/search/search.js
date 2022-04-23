@@ -10,13 +10,14 @@ import { categories } from "../../models/filters";
 import { ProfessionalsList } from "./professionals-list/professionals-list";
 import store from "../../store";
 import { getAllProfessionals } from "../../services/user.service";
+import { getClients } from "../../services/professional.service";
 export function Search() {
     const [gender, setGender] = useState('Any');
     const [category, setCategory] = useState(categories[0]);
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [searchFor, setSearchFor] = useState('Professional')
     const [searchInput, setSearchInput] = useState('');
-    const [professionalsData, setProfessionalsData] = useState([]);
+    const [results, setResults] = useState([]);
     const [searchResults, setSearchResuts] = useState();
     const [filters, setFilters] = useState({
         name: '',
@@ -24,6 +25,8 @@ export function Search() {
         gender: 'Any'
     });
     const user = store.getState().userDetails;
+    const isCustomer = user.user_type==='Customer';
+    const isProfessional = user.user_type==='Professional'
     useEffect(() => {
         getProfessionals();
 
@@ -31,20 +34,20 @@ export function Search() {
 
 
     async function getProfessionals() {
-        const { data } = await getAllProfessionals();
-        setProfessionalsData(data);
+        const { data } = await isCustomer ?  getAllProfessionals() : isProfessional && getClients();
+        setResults(data);
         setSearchResuts(data);
     }
 
     const filterSearchResults = (filters) => {
         if (!filters) {
-            setSearchResuts(professionalsData);
+            setSearchResuts(results);
             return;
         }
 
-        const filterWithNames = professionalsData.filter(data => {
-            const name = `${data.first_name?.toLowerCase()} ${data.last_name?.toLowerCase()}`
-            return name.includes(filters.name?.toLowerCase())
+        const filterWithNames = results.filter(data => {
+            
+            return data.professional_info?.name?.toLowerCase().includes(filters.name?.toLowerCase())
         });
 
         const filterWithType = filterWithNames.filter(data => {
@@ -52,14 +55,14 @@ export function Search() {
             if (filters.professional_type === 'All') {
                 return true;
             }
-            return data.professional_type === filters.professional_type
+            return data.professional_info.professional_type === filters.professional_type
         });
 
         const filterWithGender = filterWithType.filter(data => {
             if (filters.gender === 'Any') {
                 return true;
             }
-            return data.gender === filters.gender;
+            return data.professional_info.gender === filters.gender;
         });
 
         setSearchResuts(filterWithGender);
