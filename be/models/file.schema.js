@@ -6,7 +6,7 @@ const fileInfoSchema = new Schema(
   {
     professional_id: {
       type: Schema.Types.ObjectId,
-      ref: CONSTANTS.MODELS.PROFESSIONAL_INFO,
+      ref: CONSTANTS.MODELS.USER,
       default: null,
     },
     file_public_url: {

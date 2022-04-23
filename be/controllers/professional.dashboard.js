@@ -9,6 +9,7 @@
 const logger = require("../utils/logger");
 const lodash = require("lodash");
 const { User } = require("../models/user.schema");
+const { PlansSchema } = require("../models/plans.schema");
 const { FileInfoSchema } = require("../models/file.schema");
 const { ProfessionalInfo } = require("../models/professional_info.schema");
 
@@ -71,7 +72,7 @@ async function updateProfessional(req, res) {
 }
 
 /**
- * Get all prifessionals Info
+ * Get all professionals Info
  * @param {Object} req
  * @param {Object} res
  */
@@ -95,6 +96,11 @@ async function getAllProfessional(req, res) {
   }
 }
 
+/**
+ * Upload File
+ * @param {Object} req
+ * @param {Object} res
+ */
 async function uploadFile(req, res) {
   try {
     const response = await new FileInfoSchema({
@@ -117,9 +123,37 @@ async function uploadFile(req, res) {
   }
 }
 
+/**
+ * Get all customers enrolled
+ * @param {Object} req
+ * @param {Object} res
+ */
+async function getAllCustomerForProfessional(req, res) {
+  try {
+    const allProfessionals = await PlansSchema.find({
+      professional_id: req.params.professionalId,
+    })
+      .select("customer_enrolled")
+      .populate({
+        path: "customer_enrolled",
+        select: "customer_info",
+        populate: {
+          path: "customer_info",
+        },
+      });
+    res.status(200).send(allProfessionals);
+  } catch (error) {
+    logger.error("Error in getting all profesional data: " + error);
+    res.status(500).send({
+      message: "Something went wrong: " + error,
+    });
+  }
+}
+
 module.exports = {
   readProfessional,
   getAllProfessional,
   uploadFile,
   updateProfessional,
+  getAllCustomerForProfessional,
 };

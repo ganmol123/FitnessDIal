@@ -120,7 +120,14 @@ async function createCustomer(req, res) {
  */
 async function createPlan(req, res) {
   try {
-    const { type, files, description, duration, requirements } = req.body;
+    const {
+      type,
+      files,
+      description,
+      duration,
+      requirements,
+      customer_enrolled,
+    } = req.body;
 
     const plan = await new PlansSchema({
       professional_id: req.params.professionalId,
@@ -129,6 +136,7 @@ async function createPlan(req, res) {
       description: description,
       duration: duration,
       requirements: requirements,
+      customer_enrolled: customer_enrolled,
     });
 
     await plan.save();
@@ -154,7 +162,7 @@ async function createPlan(req, res) {
  */
 async function getAllPlans(req, res) {
   try {
-    const plans = await PlansSchema.find();
+    const plans = await PlansSchema.find(req.query);
     res.status(200).send({
       plans,
     });
@@ -168,9 +176,31 @@ async function getAllPlans(req, res) {
   }
 }
 
+/**
+ * Get all Users
+ * @param {Object} req
+ * @param {Object} res
+ */
+async function getAllUsers(req, res) {
+  try {
+    const users = await User.find(req.query);
+    res.status(200).send({
+      users,
+    });
+    return;
+  } catch (error) {
+    logger.error("Error in getting all the Users: " + error);
+    res.status(500).send({
+      message: "Something went wrong: " + error,
+    });
+    return;
+  }
+}
+
 module.exports = {
   createProfessional,
   createCustomer,
   createPlan,
   getAllPlans,
+  getAllUsers,
 };

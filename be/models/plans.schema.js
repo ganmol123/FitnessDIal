@@ -7,7 +7,7 @@ const plansSchema = new Schema(
     active: { type: Boolean, default: false },
     professional_id: {
       type: Schema.Types.ObjectId,
-      ref: CONSTANTS.MODELS.PROFESSIONAL_INFO,
+      ref: CONSTANTS.MODELS.USER,
     },
     type: {
       type: String,
@@ -27,6 +27,12 @@ const plansSchema = new Schema(
     requirements: {
       type: String,
     },
+    customer_enrolled: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: CONSTANTS.MODELS.USER,
+      },
+    ],
   },
   { timestamps: true }
 );
