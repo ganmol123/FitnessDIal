@@ -20,4 +20,9 @@ router.post(
   user.uploadFile
 );
 
+router.get(
+  "/customerEnrolled/:professionalId",
+  user.getAllCustomerForProfessional
+);
+
 module.exports = router;

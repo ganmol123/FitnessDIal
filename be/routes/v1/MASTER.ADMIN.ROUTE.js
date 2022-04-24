@@ -11,4 +11,6 @@ router.post("/createPlan/:professionalId", admin.createPlan);
 
 router.get("/plans", admin.getAllPlans);
 
+router.get("/users", admin.getAllUsers);
+
 module.exports = router;
