@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardMedia, Typography, CardContent } from '@mui/material';
+import { Card, CardActionArea, CardMedia, Typography, CardContent, CircularProgress } from '@mui/material';
 import { categories } from '../../models/filters';
 import { useRoutes } from 'react-router-dom';
 import './dashboard-content.scss';
@@ -10,11 +10,25 @@ import { storage } from '../../firebase';
 export function CustomerDashboard() {
     const user = store.getState().userDetails;
     const [info, setInfo] = useState();
+
+    const [recommendedVideos, setRecommendedVideos] = useState();
     
     useEffect(() => {
         getData();
-    }, [])
+        getRecommendedVideos();
+    }, []) 
 
+    const getRecommendedVideos = ()=> {
+        const l_ref = ref(storage,'recommendations');
+        listAll(l_ref).then(vals=> {
+            Promise.all(vals.items.map(getDownloadURL)).then(links=> {
+                console.log(links)
+                const urls = []
+                links.forEach((link,i)=>urls.push({name:vals.items[i].name,url:link}));
+                setRecommendedVideos(urls);
+            })
+        })
+    }
     const getProfessionalContent = (id) => {
         const listRef = ref(storage, id);
         // Find all the prefixes and items.
@@ -25,6 +39,7 @@ export function CustomerDashboard() {
     const getData = async () => {
         const { data } = await getProfileData(user);
         setInfo(data.customer_info);
+        if(data.customer_info.professionals_enrolled.length) {
         Promise.all(data.customer_info.professionals_enrolled.map(getProfessionalContent)).then(vals=>{
             const items = []
             console.log(vals)
@@ -37,6 +52,10 @@ export function CustomerDashboard() {
                 setContent(links);
             })
         })
+        }
+        else {
+            setContent(types);
+        }
     }
     const types = [
         {
@@ -84,15 +103,15 @@ export function CustomerDashboard() {
             ]
         }
     ]
-    const [content, setContent] = useState(types);
+    const [content, setContent] = useState();
     return (
         <div className="dashboard-content-container">
-            {info && <> <div className="dashboard-header">
+            {info ? <> <div className="dashboard-header">
                 {info.professionals_enrolled.length? 'Your Videos' : 'Demo Videos'}
             </div>
                 <div className="categories-container">
                     {
-                        content.map(cat => {
+                        content ? ( content.length ? content.map(cat => {
                             return (
                                 <div className="category-container" key={cat.name}>
                                     <div className="category-title">
@@ -102,10 +121,20 @@ export function CustomerDashboard() {
                                         {cat.links.map((link, i) => <VideoTile key={link} data={{ url: link, name: `${cat.name}${i}` }} />)}
                                     </div>
                                 </div>
-                            )
-                        })
+                            ) 
+                        }) : <div>Your professional has not uploaded any videos.</div>) :<CircularProgress/>
                     }
-                </div></>
+                </div>
+                
+                <div className='dashboard-header' style={{marginTop:'2em'}}>
+                    Recommended Videos
+                </div>
+
+                <div className='video-tiles-container'>
+                    {recommendedVideos ? recommendedVideos.map((link, i) => <VideoTile key={i} data={{ url: link.url, name: `${link.name}${i}`}}/>): <CircularProgress/>}
+                </div>
+                
+                </> : <CircularProgress/>
             }
 
         </div>

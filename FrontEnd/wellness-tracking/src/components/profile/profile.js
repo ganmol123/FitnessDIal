@@ -1,4 +1,4 @@
-import { Alert, Avatar, TextField } from "@mui/material";
+import { Alert, Avatar, CircularProgress, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 import Button from '@mui/material/Button';
 import './profile.scss';
@@ -48,7 +48,7 @@ export function Profile() {
         <div className="user-profile-container">
             {/* <Navbar></Navbar> */}
             
-            {userDetails && <div className="user-profile-form">
+            {userDetails ? <div className="user-profile-form">
             {alert.msg && <Alert onClose={()=>setAlert({msg:''})} severity={alert.type}>{alert.msg}</Alert>}
                 <Avatar sx={{ width: 75, height: 75 }}></Avatar>
                 <p>Update Photo</p>
@@ -77,7 +77,7 @@ export function Profile() {
                         Save
                     </Button>
                 </div>
-            </div>}
+            </div>: <CircularProgress/>}
 
         </div>
     )
