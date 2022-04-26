@@ -12,6 +12,9 @@ const customerInfoSchema = new Schema(
       type: String,
       require: true,
     },
+    state: {
+      type: String,
+    },
     country: {
       type: String,
     },
