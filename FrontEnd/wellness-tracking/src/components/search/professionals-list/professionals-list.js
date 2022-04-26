@@ -7,7 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import ChatIcon from '@mui/icons-material/Chat';
 import './professionals-list.scss';
 import store from '../../../store';
-import { Box, Drawer } from '@mui/material';
+import { Box, Button, Drawer } from '@mui/material';
 import { Profile } from './profile/profile';
 export function ProfessionalsList({ professionalsData }) {
     const [showpProfile, setShowProfile] = useState(false);
@@ -50,9 +50,9 @@ export function ProfessionalsList({ professionalsData }) {
                 <Box
                     sx={{ width: 800 }}
                     role="presentation"
-                    onClick={toggleDrawer('right', false)}
                     onKeyDown={toggleDrawer('right', false)}
                 >
+                    <Button style={{margin:'1em'}} variant="outlined">Close</Button>
                     <Profile id={id}/>
                 </Box>
 

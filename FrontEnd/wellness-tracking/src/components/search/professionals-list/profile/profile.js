@@ -14,6 +14,7 @@ export function Profile({ id }) {
 
     const subscribeProf = async ()=> {
         const details = {...info}
+        console.log(details);
         details.plans_enrolled.push({
             professional_id: id,
             name: info.professional_type
@@ -27,6 +28,7 @@ export function Profile({ id }) {
 
     const getData = async () => {
         const { data } = await getProfileData({_id:id, user_type:user.user_type==='Professional'?'Customer':'Professional'});
+        console.log(data)
         setInfo(user.user_type==='Professional' ? data.customer_info: data.professional_info)
     }
 
@@ -51,7 +53,7 @@ export function Profile({ id }) {
                     <div className="email prop"><strong>Email</strong>: {info.email}</div>
                     <div className="phone prop"><strong>Phone</strong>: {info.number}</div>
                     <div className="address prop"><strong>Address</strong>: {info.address}</div>
-                    { user.user_type==='Customer' && <Button variant="contained" color={color} onClick={subscribeProf()}>{color==='primary' ? 'Subscribe': 'Subscribed'}</Button>}
+                    { user.user_type==='Customer' && <Button variant="contained" color={color} onClick={()=>subscribeProf()}>{color==='primary' ? 'Subscribe': 'Subscribed'}</Button>}
                 </div>
             </div> : <CircularProgress style={{ margin: 'auto' }} />}
 
