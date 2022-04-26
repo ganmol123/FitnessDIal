@@ -10,9 +10,10 @@ import { CustomerTabs, ProfessionalTabs } from './models/tabs';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Search } from './components/search/search';
 import store from './store';
+import { SubscriptionPlans } from './components/subscription-plan/subscription-plan';
 import { Messages } from './components/messages/messages';
+import { Notifications } from './components/notifications/Notifications';
 
 
 function App() {
@@ -63,6 +64,8 @@ function App() {
           <Route path='dashboard' element={<Home></Home>}></Route>
           <Route path='profile' element={<Profile></Profile>}></Route>
           <Route path='messages' element={<Messages />}></Route>
+          <Route path="plan" element={<SubscriptionPlans/>}></Route>
+          <Route path="notifications" element={<Notifications/>}></Route>
           <Route element={<div>Not found</div>}></Route>
         </Routes>
       </div>

@@ -34,7 +34,7 @@ export function Search() {
 
 
     async function getProfessionals() {
-        const { data } = await isCustomer ?  getAllProfessionals() : isProfessional && getClients();
+        const { data } = await (isCustomer ? getAllProfessionals() : getClients(user._id));
         setResults(data);
         setSearchResuts(data);
     }

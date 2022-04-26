@@ -42,7 +42,7 @@ export const ChatApp = () => {
                         <Autocomplete onChange={(e) => console.log(e.target.value)}
                             id="searchForChat"
                             freeSolo
-                            options={professionals.map((option) => option.username)}
+                            options={professionals.map((option) => option.professional_info?.name?.split(" ")[0] || "")}
                             renderInput={(params) => {
                                 return <TextField size="small" {...params} label="Search" />
                             }}
