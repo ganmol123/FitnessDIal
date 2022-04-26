@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
-import { getProfessionalContent, uploadFile } from "../../services/professional.service"
 import ArticleIcon from '@mui/icons-material/Article';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { Button, Fab } from "@mui/material";
+import { Fab } from "@mui/material";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import store from "../../store";
 import { VideoTile } from './customer-dashboard';
 import './dashboard-content.scss';
 import { storage } from '../../firebase';
 import LinearProgress from '@mui/material/LinearProgress';
+import { CircularProgress } from '@mui/material';
 import { ref, uploadBytesResumable, getDownloadURL, listAll } from "firebase/storage";
 
 
@@ -16,7 +15,7 @@ export function ProfessionalDashboard() {
     const user = store.getState().userDetails;
 
     const [progress, setProgress] = useState(0);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState();
     const [file, setFile] = useState();
     
     useEffect(() => {
@@ -86,9 +85,9 @@ export function ProfessionalDashboard() {
             </div>
             <div className="videos-container">
                 <div style={{fontSize: '30px'}}>
-                    {data.length ? <div className="video-tiles-container">
+                    {data ?( data.length ? <div className="video-tiles-container">
                         {data.map((link,i) => <VideoTile key={i} data={{ url: link.url, name: link.name }} />)}
-                    </div> : <div style={{display:'flex', alignItems:'center', justifyContent:'center',margin:'3em'}}><ArticleIcon style={{ margin: '15px' }} fontSize="large" /> No data Available</div>}
+                    </div> : <div style={{display:'flex', alignItems:'center', justifyContent:'center',margin:'3em'}}><ArticleIcon style={{ margin: '15px' }} fontSize="large" /> No data Available</div>): <CircularProgress/>}
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', margin:'3em', gap: '20px', justifyContent: 'center' }}>

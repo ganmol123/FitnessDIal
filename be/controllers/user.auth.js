@@ -273,7 +273,7 @@ async function authenticate(email, password) {
         user.createdAt
       );
       // create password reset url from token
-      const url = `${CONFIG.CLIENT_SIDE_URL}?id=${user._id}&token=${token}`;
+      const url = `${CONFIG.CLIENT_SIDE_URL}/createPass/?id=${user._id}&token=${token}`;
       // send email
       if (user.user_type == "Customer")
         await sendEmailForActivatingCustomer(user, url);

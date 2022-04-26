@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import './create-password.scss';
 import axios from '../../axios';
+import jwt_decode from "jwt-decode"
 
 export function CreatePassword() {
     const navigate = useNavigate()
@@ -14,8 +15,10 @@ export function CreatePassword() {
 
     const createPassword = async (e ) => {
         e.preventDefault();
+        const token = (searchParams.get('token'));
+        console.log(token);
         try {
-            await axios.post(`api/authnew/createpass/${searchParams.get('id')}/${searchParams.get('token')}`, {
+            await axios.post(`api/authnew/createpass/${searchParams.get('id')}/${token}`, {
                 new_pass,
                 confirm_new_pass
             })

@@ -15,6 +15,9 @@ const customerInfoSchema = new Schema(
     country: {
       type: String,
     },
+    phone: {
+      type: Number,
+    },
     address: {
       type: String,
     },

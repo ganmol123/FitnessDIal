@@ -36,6 +36,7 @@ export function Login() {
 
     const navigateToHome = (user) => {
         setLoading(false)
+        // user.user_type = 'Professional';
         store.dispatch({ type: 'SET_USER', userDetails: user });
         setUserDetails(user);
         // addPerson(user);
