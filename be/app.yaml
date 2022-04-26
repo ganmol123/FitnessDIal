@@ -10,6 +10,6 @@ env_variables:
   SENDGRID_API_KEY:
   SENDER_MAIL: "anmgupta@iu.edu"
   CLIENT_SIDE_URL: "fitness-dial.web.app"
-  SESSION_SECRET: "ca918e68e284480aaa4315effb2695cc518961bdc886bd0cf5ad03f98d758164"
+  SESSION_SECRET:
   GCLOUD_PROJECT_ID: "vk-services-prod"
   BUCKET_NAME: "fitnessdial-professional-videos"
