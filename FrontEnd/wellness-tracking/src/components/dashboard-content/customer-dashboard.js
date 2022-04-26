@@ -12,19 +12,19 @@ export function CustomerDashboard() {
     const [info, setInfo] = useState();
 
     const [recommendedVideos, setRecommendedVideos] = useState();
-    
+
     useEffect(() => {
         getData();
         getRecommendedVideos();
-    }, []) 
+    }, [])
 
-    const getRecommendedVideos = ()=> {
-        const l_ref = ref(storage,'recommendations');
-        listAll(l_ref).then(vals=> {
-            Promise.all(vals.items.map(getDownloadURL)).then(links=> {
+    const getRecommendedVideos = () => {
+        const l_ref = ref(storage, 'recommendations');
+        listAll(l_ref).then(vals => {
+            Promise.all(vals.items.map(getDownloadURL)).then(links => {
                 console.log(links)
                 const urls = []
-                links.forEach((link,i)=>urls.push({name:vals.items[i].name,url:link}));
+                links.forEach((link, i) => urls.push({ name: vals.items[i].name, url: link }));
                 setRecommendedVideos(urls);
             })
         })
@@ -33,25 +33,25 @@ export function CustomerDashboard() {
         const listRef = ref(storage, id);
         // Find all the prefixes and items.
         return listAll(listRef)
-            
+
     }
 
     const getData = async () => {
         const { data } = await getProfileData(user);
         setInfo(data.customer_info);
-        if(data.customer_info.professionals_enrolled.length) {
-        Promise.all(data.customer_info.professionals_enrolled.map(getProfessionalContent)).then(vals=>{
-            const items = []
-            console.log(vals)
-            vals.forEach(val=> {
-                items.push(...val.items)
-            });
-            Promise.all(items.map(getDownloadURL)).then(vals=>{
-                const links = []
-                items.forEach((item,i)=>links.push({url:vals[i],name:item.name}))
-                setContent(links);
+        if (data.customer_info.professionals_enrolled.length) {
+            Promise.all(data.customer_info.professionals_enrolled.map(getProfessionalContent)).then(vals => {
+                const items = []
+                console.log(vals)
+                vals.forEach(val => {
+                    items.push(...val.items)
+                });
+                Promise.all(items.map(getDownloadURL)).then(vals => {
+                    const links = []
+                    items.forEach((item, i) => links.push({ url: vals[i], name: item.name }))
+                    setContent(links);
+                })
             })
-        })
         }
         else {
             setContent(types);
@@ -107,11 +107,11 @@ export function CustomerDashboard() {
     return (
         <div className="dashboard-content-container">
             {info ? <> <div className="dashboard-header">
-                {info.professionals_enrolled.length? 'Your Videos' : 'Demo Videos'}
+                {info.professionals_enrolled.length ? 'Your Videos' : 'Demo Videos'}
             </div>
-                <div className="categories-container">
+               { !info.professionals_enrolled.length && <div className="categories-container">
                     {
-                        content ? ( content.length ? content.map(cat => {
+                        content ? (content.length ? content.map(cat => {
                             return (
                                 <div className="category-container" key={cat.name}>
                                     <div className="category-title">
@@ -121,20 +121,24 @@ export function CustomerDashboard() {
                                         {cat.links.map((link, i) => <VideoTile key={link} data={{ url: link, name: `${cat.name}${i}` }} />)}
                                     </div>
                                 </div>
-                            ) 
-                        }) : <div>Your professional has not uploaded any videos.</div>) :<CircularProgress/>
+                            )
+                        }) : <div>Your professional has not uploaded any videos.</div>) : <CircularProgress />
                     }
+                </div>}
+
+                <div className="video-tiles-container">
+                    {content ? (content.length ? content.map(cat=><VideoTile key={cat.url} data={{ url: cat.url, name: `${cat.name}` }} />): <div>Your professional has not uploaded any videos.</div> ):<CircularProgress/>  }
                 </div>
-                
-                <div className='dashboard-header' style={{marginTop:'2em'}}>
+
+                <div className='dashboard-header' style={{ marginTop: '2em' }}>
                     Recommended Videos
                 </div>
 
                 <div className='video-tiles-container'>
-                    {recommendedVideos ? recommendedVideos.map((link, i) => <VideoTile key={i} data={{ url: link.url, name: `${link.name}${i}`}}/>): <CircularProgress/>}
+                    {recommendedVideos ? recommendedVideos.map((link, i) => <VideoTile key={i} data={{ url: link.url, name: `${link.name}${i}` }} />) : <CircularProgress />}
                 </div>
-                
-                </> : <CircularProgress/>
+
+            </> : <CircularProgress />
             }
 
         </div>
