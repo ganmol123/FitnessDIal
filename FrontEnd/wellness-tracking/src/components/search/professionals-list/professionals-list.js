@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
@@ -9,11 +9,24 @@ import './professionals-list.scss';
 import store from '../../../store';
 import { Box, Button, Drawer } from '@mui/material';
 import { Profile } from './profile/profile';
+import { getProfileData } from '../../../services/profile.service';
 export function ProfessionalsList({ professionalsData }) {
     const [showpProfile, setShowProfile] = useState(false);
     const [professionalData, setProfessionalData] = useState();
     const [id, setId] = useState();
+    const user = store.getState().userDetails;
+    const [info, setInfo] = useState();
     const isCustomer = store.getState().userDetails.ser_type==='Customer';
+    useEffect(()=> {
+        getData();
+    },[])
+
+    const getData = async ()=> {
+        const {data} = await getProfileData(user);
+        console.log(data)
+        setInfo(data);
+    }
+
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
@@ -52,8 +65,8 @@ export function ProfessionalsList({ professionalsData }) {
                     role="presentation"
                     onKeyDown={toggleDrawer('right', false)}
                 >
-                    <Button style={{margin:'1em'}} variant="outlined">Close</Button>
-                    <Profile id={id}/>
+                    <Button style={{margin:'1em'}} onClick={toggleDrawer('right',false)} variant="outlined">Close</Button>
+                    {<Profile id={id} info={info}/>}
                 </Box>
 
             </Drawer>

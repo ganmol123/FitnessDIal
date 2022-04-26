@@ -11,6 +11,7 @@ import { ProfessionalsList } from "./professionals-list/professionals-list";
 import store from "../../store";
 import { getAllProfessionals } from "../../services/user.service";
 import { getClients } from "../../services/professional.service";
+import { getProfileData } from "../../services/profile.service";
 export function Search() {
     const [gender, setGender] = useState('Any');
     const [category, setCategory] = useState(categories[0]);
@@ -29,9 +30,9 @@ export function Search() {
     const isProfessional = user.user_type==='Professional'
     useEffect(() => {
         getProfessionals();
-
     }, [])
 
+    
 
     async function getProfessionals() {
         const { data } = await (isCustomer ? getAllProfessionals() : getClients(user._id));

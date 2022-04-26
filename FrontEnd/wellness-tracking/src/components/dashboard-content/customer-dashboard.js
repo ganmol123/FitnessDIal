@@ -2,7 +2,42 @@ import { Card, CardActionArea, CardMedia, Typography, CardContent } from '@mui/m
 import { categories } from '../../models/filters';
 import { useRoutes } from 'react-router-dom';
 import './dashboard-content.scss';
+import { useEffect, useState } from 'react';
+import store from '../../store';
+import { getProfileData } from '../../services/profile.service';
+import { getDownloadURL, listAll, ref } from 'firebase/storage';
+import { storage } from '../../firebase';
 export function CustomerDashboard() {
+    const user = store.getState().userDetails;
+    const [info, setInfo] = useState();
+    
+    useEffect(() => {
+        getData();
+    }, [])
+
+    const getProfessionalContent = (id) => {
+        const listRef = ref(storage, id);
+        // Find all the prefixes and items.
+        return listAll(listRef)
+            
+    }
+
+    const getData = async () => {
+        const { data } = await getProfileData(user);
+        setInfo(data.customer_info);
+        Promise.all(data.customer_info.professionals_enrolled.map(getProfessionalContent)).then(vals=>{
+            const items = []
+            console.log(vals)
+            vals.forEach(val=> {
+                items.push(...val.items)
+            });
+            Promise.all(items.map(getDownloadURL)).then(vals=>{
+                const links = []
+                items.forEach((item,i)=>links.push({url:vals[i],name:item.name}))
+                setContent(links);
+            })
+        })
+    }
     const types = [
         {
             name: 'Weight Training',
@@ -49,27 +84,29 @@ export function CustomerDashboard() {
             ]
         }
     ]
+    const [content, setContent] = useState(types);
     return (
         <div className="dashboard-content-container">
-            <div className="dashboard-header">
-                Demo Videos
+            {info && <> <div className="dashboard-header">
+                {info.professionals_enrolled.length? 'Your Videos' : 'Demo Videos'}
             </div>
-            <div className="categories-container">
-                {
-                    types.map(cat => {
-                        return (
-                            <div className="category-container" key={cat.name}>
-                                <div className="category-title">
-                                    {cat.name}
+                <div className="categories-container">
+                    {
+                        content.map(cat => {
+                            return (
+                                <div className="category-container" key={cat.name}>
+                                    <div className="category-title">
+                                        {cat.name}
+                                    </div>
+                                    <div className="video-tiles-container">
+                                        {cat.links.map((link, i) => <VideoTile key={link} data={{ url: link, name: `${cat.name}${i}` }} />)}
+                                    </div>
                                 </div>
-                                <div className="video-tiles-container">
-                                    {cat.links.map((link,i) => <VideoTile key={link} data={{ url: link, name: `${cat.name}${i}` }} />)}
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-            </div>
+                            )
+                        })
+                    }
+                </div></>
+            }
 
         </div>
     )
@@ -77,7 +114,7 @@ export function CustomerDashboard() {
 
 
 
-export function VideoTile({data} ) {
+export function VideoTile({ data }) {
     return (
         <Card sx={{ minWidth: 300, margin: '20px 20px 20px 0', maxHeight: 200 }}>
             <CardActionArea>
