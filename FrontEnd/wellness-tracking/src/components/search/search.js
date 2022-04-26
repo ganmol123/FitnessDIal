@@ -111,7 +111,7 @@ export function Search() {
     const classes = useCustomStylesByIds();
     return (
         <div className="search-container">
-            <div className="search-header" style={{ marginBottom: '30px', display: 'flex', fontWeight: 'bold' }}>Explore Fitness Professionals.</div>
+            <div className="search-header" style={{ marginBottom: '30px', display: 'flex', fontWeight: 'bold' }}>{ user.user_type==='Customer' ? 'Explore Fitness Professionals.' : 'Explore your clients'}</div>
             {user.user_type === 'Customer' && <div className="search-filters" style={{ display: 'flex', marginBottom: '30px' }}>
                 <Button id='filters-button' variant="text" startIcon={<FilterAltIcon />} onClick={(e) => { setAnchorEl(e.currentTarget); setFiltersOpen(!filtersOpen) }}>
                     Filters
