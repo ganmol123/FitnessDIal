@@ -70,7 +70,7 @@ async function updateClient(req, res) {
 }
 
 /**
- * Get All the plans and videos uploaded by the client
+ * Get All the plans and videos susbcribed by the client
  * @param {Object} req
  * @param {Object} res
  */

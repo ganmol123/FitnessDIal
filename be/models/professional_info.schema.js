@@ -49,6 +49,9 @@ const professionalInfoSchema = new Schema(
         CONSTANTS.GENDER.OTHERS,
       ],
     },
+    age: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );

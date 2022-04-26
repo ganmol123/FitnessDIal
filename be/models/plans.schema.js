@@ -5,6 +5,7 @@ const CONSTANTS = require("../config/constants");
 const plansSchema = new Schema(
   {
     active: { type: Boolean, default: false },
+    name: { type: String },
     professional_id: {
       type: Schema.Types.ObjectId,
       ref: CONSTANTS.MODELS.USER,

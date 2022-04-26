@@ -42,7 +42,14 @@ const customerInfoSchema = new Schema(
         ref: CONSTANTS.MODELS.PLANS,
       },
     ],
+    professionals_enrolled: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: CONSTANTS.MODELS.USER,
+      },
+    ],
   },
+
   { timestamps: true }
 );
 

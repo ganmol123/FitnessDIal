@@ -27,6 +27,7 @@ async function createProfessional(req, res) {
     gender,
     number,
     description,
+    age,
   } = req.body;
   const name = first_name + " " + last_name;
   const professional_info = await new ProfessionalInfo({
@@ -40,6 +41,7 @@ async function createProfessional(req, res) {
     professional_type: professional_type,
     gender: gender,
     onboarding_date: Date.now(),
+    age: age,
   });
   await professional_info.save();
 
@@ -76,6 +78,11 @@ async function createCustomer(req, res) {
     gender,
     number,
     description,
+    age,
+    weight,
+    height,
+    bmi,
+    primary_goal,
     plans_enrolled,
   } = req.body;
 
@@ -92,6 +99,11 @@ async function createCustomer(req, res) {
     gender: gender,
     onboarding_date: Date.now(),
     plans_enrolled: plans_enrolled,
+    age: age,
+    weight: weight,
+    height: height,
+    bmi: bmi,
+    primary_goal: primary_goal,
   });
   await customer_info.save();
 
@@ -102,7 +114,7 @@ async function createCustomer(req, res) {
     first_name: first_name,
     last_name: last_name,
     email: email,
-    user_type: CONSTANTS.USER_TYPE.PROFESSIONAL,
+    user_type: CONSTANTS.USER_TYPE.CUSTOMER,
     password: passwordHash,
     customer_info: customer_info._id,
     activated: true,
