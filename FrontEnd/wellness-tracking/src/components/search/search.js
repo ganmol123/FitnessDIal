@@ -36,8 +36,16 @@ export function Search() {
 
     async function getProfessionals() {
         const { data } = await (isCustomer ? getAllProfessionals() : getClients(user._id));
-        setResults(data);
-        setSearchResuts(data);
+        if(isProfessional) {
+            console.log(data.professional_info.customers_enrolled);
+            setResults(data.professional_info.customers_enrolled);
+            setSearchResuts(data.professional_info.customers_enrolled);
+        }
+        else {
+            setResults(data);
+            setSearchResuts(data);
+        }
+       
     }
 
     const filterSearchResults = (filters) => {

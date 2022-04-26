@@ -23,7 +23,7 @@ async function readClient(req, res) {
       .populate({
         path: "customer_info",
         select:
-          "name email address number description gender professionals_enrolled",
+          "name email address number age description gender customer_info professionals_enrolled",
       });
 
     res.status(200).send(client);

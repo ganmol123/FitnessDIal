@@ -45,21 +45,21 @@ export function Profile({ id, info }) {
 
 
                 <div className="profile-info" style={{ fontSize: '16px' }}>
-                    <div className="category prop"><strong>Category</strong>: {details.professional_type}</div>
-                    <div className="description prop"><strong>Description</strong>: {details.description}</div>
+                    {user.user_type === 'Customer' && <><div className="category prop"><strong>Category</strong>: {details.professional_type}</div>
+                        <div className="description prop"><strong>Description</strong>: {details.description}</div></>}
                     <div className="age prop"><strong>Age</strong>: {details.age}</div>
                     <div className="gender prop"><strong>Gender</strong>: {details.gender}</div>
                     <div className="email prop"><strong>Email</strong>: {details.email}</div>
-                    <div className="phone prop"><strong>Phone</strong>: {details.number}</div>
+                    {user.user_type==='Customer' && <div className="phone prop"><strong>Phone</strong>: {details.number}</div>}
                     <div className="address prop"><strong>Address</strong>: {details.address}</div>
                     {user.user_type === 'Customer' && <Button variant="contained" color={color} onClick={() => subscribeProf()}>{color === 'primary' ? 'Subscribe' : 'Subscribed'}</Button>}
-                    {user.user_type === 'Customer' && <><div className='rating' style={{paddingTop:'20px'}}>Rate your professional</div>
+                    {user.user_type === 'Customer' && <><div className='rating' style={{ paddingTop: '20px' }}>Rate your professional</div>
                         <Rating
                             name="simple-controlled"
                             value={rating}
                             onChange={(event, newValue) => {
                                 setRating(newValue);
-                                localStorage.setItem(`rating_${id}`,newValue);
+                                localStorage.setItem(`rating_${id}`, newValue);
                             }}
                         />
                     </>

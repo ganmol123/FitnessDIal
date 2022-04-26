@@ -37,10 +37,10 @@ export function ProfessionalsList({ professionalsData }) {
     const ListElement = ({ data, id }) => {
         return (<><ListItem style={{ display: 'flex', alignItems: 'center' }} alignItems="flex-start">
             <ListItemAvatar>
-                <Avatar alt={data?.name?.toUpperCase()} src="/static/images/avatar/1.jpg" />
+                <Avatar alt={data?.name?.toUpperCase()|| data?.first_name?.toUpperCase()} src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             <div className="list-item-container">
-                <div className="professional-name" style={{width:200}}>{data?.name}</div>
+                <div className="professional-name" style={{width:200}}>{data?.name || `${data?.first_name} ${data?.last_name}`}</div>
                 <div className="icons">
                     <div className='view-profile' onClick={() => {setShowProfile(true); setId(id)}}>View Profile</div>
                     { isCustomer &&  <div className='chat'> <ChatIcon color='primary' style={{cursor:"pointer"}}/></div>}
@@ -53,7 +53,7 @@ export function ProfessionalsList({ professionalsData }) {
     return (
         <div className='list-container'>
             <List sx={{ width: '100%', maxWidth: 800, bgcolor: 'background.paper' }}>
-                {professionalsData.map(prof => <ListElement data={prof.professional_info} id={prof._id} key={prof._id} />)}
+                {professionalsData.map(prof => <ListElement data={ user.user_type==='Customer' ? prof.professional_info : prof} id={prof._id} key={prof._id} />)}
             </List>
             <Drawer
                 anchor="right"
