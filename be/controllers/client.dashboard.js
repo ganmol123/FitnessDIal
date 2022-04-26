@@ -9,6 +9,7 @@ const lodash = require("lodash");
 const logger = require("../utils/logger");
 const { User } = require("../models/user.schema");
 const { CustomerInfo } = require("../models/customer_info.schema");
+const { ProfessionalInfo } = require("../models/professional_info.schema");
 
 /**
  * Get Client Info
@@ -21,7 +22,8 @@ async function readClient(req, res) {
       .select("activated")
       .populate({
         path: "customer_info",
-        select: "name email address number description gender plans_enrolled",
+        select:
+          "name email address number description gender professionals_enrolled",
       });
 
     res.status(200).send(client);
@@ -52,6 +54,20 @@ async function updateClient(req, res) {
         message:
           "Body cannot contain name and email and they can't be updated. Contact Customer support!",
       });
+    }
+
+    // console.log(req.body.professionals_enrolled[0]);
+
+    if (req.body.professionals_enrolled) {
+      const professional = await User.findById(
+        req.body.professionals_enrolled[0]
+      );
+      const professional_data = await ProfessionalInfo.findById(
+        professional.professional_info
+      );
+
+      professional_data.customers_enrolled.push(req.params.clientId);
+      await professional_data.save();
     }
 
     const client = await User.findById(req.params.clientId);

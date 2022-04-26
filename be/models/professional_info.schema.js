@@ -52,6 +52,13 @@ const professionalInfoSchema = new Schema(
     age: {
       type: Number,
     },
+    customers_enrolled: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: CONSTANTS.MODELS.USER,
+        default: null,
+      },
+    ],
   },
   { timestamps: true }
 );

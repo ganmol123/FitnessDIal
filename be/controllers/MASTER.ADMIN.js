@@ -84,6 +84,7 @@ async function createCustomer(req, res) {
     bmi,
     primary_goal,
     plans_enrolled,
+    professionals_enrolled,
   } = req.body;
 
   const name = first_name + " " + last_name;
@@ -104,6 +105,7 @@ async function createCustomer(req, res) {
     height: height,
     bmi: bmi,
     primary_goal: primary_goal,
+    professionals_enrolled: professionals_enrolled,
   });
   await customer_info.save();
 

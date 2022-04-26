@@ -49,6 +49,7 @@ const customerInfoSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: CONSTANTS.MODELS.USER,
+        default: null,
       },
     ],
   },
