@@ -52,6 +52,14 @@ const customerInfoSchema = new Schema(
         default: null,
       },
     ],
+    gender: {
+      type: String,
+      enum: [
+        CONSTANTS.GENDER.FEMALE,
+        CONSTANTS.GENDER.MALE,
+        CONSTANTS.GENDER.OTHERS,
+      ],
+    },
   },
 
   { timestamps: true }
