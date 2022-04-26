@@ -130,15 +130,13 @@ async function uploadFile(req, res) {
  */
 async function getAllCustomerForProfessional(req, res) {
   try {
-    const allProfessionals = await PlansSchema.find({
-      professional_id: req.params.professionalId,
-    })
-      .select("customer_enrolled")
+    const allProfessionals = await User.findById(req.params.professionalId)
+      .select("professional_info")
       .populate({
-        path: "customer_enrolled",
-        select: "customer_info",
+        path: "professional_info",
+        select: "professional_info",
         populate: {
-          path: "customer_info",
+          path: "customers_enrolled",
         },
       });
     res.status(200).send(allProfessionals);
